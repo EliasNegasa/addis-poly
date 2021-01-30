@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Redirect, Route } from "react-router-dom";
+import Home from "./components/home";
+import LoginForm from "./components/auth/loginForm";
+import auth from "./services/authService";
+import ReactNotification from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
+import BoxContainer from "./components/layout/box";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {};
+
+  componentDidMount() {
+    const user = auth.getCurrentUser();
+    this.setState({ user });
+  }
+
+  render() {
+    const { user } = this.state;
+    return (
+      <>
+        <ReactNotification />
+        {!user &&
+          <>
+            <Route
+              exact path="/"
+              render={(props) => {
+                if (!user) {
+                  return <Redirect to="/login" />;
+                }
+                return <Home {...props} user={user} />;
+              }}
+            />
+            <Route path="/login/confirmed" component={LoginForm} />
+            <Route exact path="/login" component={LoginForm} />
+          </>}
+
+        {user && <BoxContainer user={user} />}
+
+      </>
+    );
+  }
 }
 
 export default App;
