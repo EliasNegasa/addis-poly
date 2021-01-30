@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import { StyledBadge } from "../styled-components/containers";
+import { StyledBadge } from "../styled-components/container";
 import { formatDate } from "../../utils/formatDate";
 import { Checkbox, TableBody, TableCell, TableRow } from "@material-ui/core";
 

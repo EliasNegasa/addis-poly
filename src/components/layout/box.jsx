@@ -6,7 +6,7 @@ import {
   StyledContainer,
   StyledContent,
   StyledSubContainer,
-} from "../styled-components/containers";
+} from "../styled-components/container";
 import Router from "../router/router";
 
 const useStyles = makeStyles((theme) => ({

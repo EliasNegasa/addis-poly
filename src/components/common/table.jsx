@@ -17,14 +17,3 @@ const TableBox = ({ columns, sortColumn, data, onSort }) => {
 };
 
 export default TableBox;
-
-{
-  /* <TableHeader
-          columns={columns}
-          onSort={onSort}
-          sortColumn={sortColumn}
-        /> */
-}
-{
-  /* <TableBody data={data} columns={columns} /> */
-}

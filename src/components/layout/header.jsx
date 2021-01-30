@@ -9,7 +9,7 @@ import {
   import React from "react";
   import clsx from "clsx";
   import Profile from "../auth/profile";
-  import { StyledHeader } from "../styled-components/containers";
+  import { StyledHeader } from "../styled-components/container";
   import NotificationsIcon from "@material-ui/icons/Notifications";
   import MenuIcon from "@material-ui/icons/Menu";
   

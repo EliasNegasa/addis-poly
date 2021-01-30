@@ -1,5 +1,5 @@
 import React from "react";
-import BackdropLoader from "../common/Backdrop.js";
+import BackdropLoader from "../common/Backdrop";
 import Form from "../common/form";
 import { StyledCard } from "../styled-components/card";
 import { StyledSubHeading } from "../styled-components/heading";

@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
 export const theme = {
-  primary: "#ffcd11",
+  primary: "#3399ff",
   secondary: "#313945",
   grey: "#ebedef",
   boxShadow: "0 10px 10px rgba(0, 0, 0, 0.08)",

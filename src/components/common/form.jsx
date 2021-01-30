@@ -3,10 +3,8 @@ import Input from "./input";
 import SaveIcon from "@material-ui/icons/Save";
 import TextArea from "./textArea";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
-import FileUplaod from "./fileUpload";
 import SelectInput from "./select";
 import PreloadedSelect from "./preloadedSelect";
-import DatePickerBox from "./datePickerBox";
 import ActionButton from "./button";
 import { StyledButton } from "../styled-components/button";
 
@@ -171,28 +169,7 @@ class Form extends Component {
     );
   };
 
-  renderDatePicker = (name, label) => {
-    const { data } = this.state;
-    return (
-      <DatePickerBox
-        selectedDate={data[name]}
-        onChange={(date) => this.handleDateChange(date, name)}
-        label={label}
-      />
-    );
-  };
 
-  renderFileUpload = (name, label) => {
-    const { errors } = this.state;
-    return (
-      <FileUplaod
-        name={name}
-        label={label}
-        onChange={this.handleFileChange}
-        errors={errors[name]}
-      />
-    );
-  };
 }
 
 export default Form;

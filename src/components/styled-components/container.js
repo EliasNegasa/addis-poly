@@ -91,7 +91,7 @@ export const StyledNav = styled.li`
   }
   & a:hover, & a.active {
     background-color: #252b32;
-    border-left: 4px solid #ffcd11;
+    border-left: 4px solid #3399ff;
   }
   & .MuiSvgIcon-root {
     margin-right: 2rem;

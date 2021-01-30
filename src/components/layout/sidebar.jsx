@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { StyledLogo, StyledSideBar } from "../styled-components/containers";
+import { StyledLogo, StyledSideBar } from "../styled-components/container";
 import NavBar from "./navbar";
 // import logo from "../../logo.JPG";
 import {

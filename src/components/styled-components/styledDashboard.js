@@ -42,10 +42,10 @@ export const StyledDashboardCard = styled.div`
     `}
 
     ${props => props.blue && css`
-        background: linear-gradient(to right,#01a9ac,#01dbdf);
+        background: linear-gradient(to right,#3399ff,#a4d0fd);
         & .MuiSvgIcon-root {
          font-size: 4rem;
-         color: #01a9ac;
+         color: #3399ff;
         }
         
     `}
