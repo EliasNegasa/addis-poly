@@ -25,7 +25,6 @@ const Thead = ({ columns, onSort, sortColumn }) => {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox"></TableCell>
         {columns.map((column) => (
           <TableCell
             className={classes.clickable}

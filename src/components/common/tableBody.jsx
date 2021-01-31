@@ -22,9 +22,7 @@ class TBody extends Component {
       <TableBody>
         {data.map((item) => (
           <TableRow key={item.id}>
-            <TableCell padding="checkbox">
-              <Checkbox />
-            </TableCell>
+            
             {columns.map((column) => (
               <TableCell key={item.id + (column.path || column.key)}>
                 {this.renderCell(item, column)}

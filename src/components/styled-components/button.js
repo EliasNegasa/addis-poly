@@ -104,3 +104,8 @@ export const StyledButton = styled.button`
     top: 5px;
   }
 `;
+
+export const StyledLink = styled.a`
+  cursor: pointer;
+  color: ${(props) => props.theme.primary}
+`

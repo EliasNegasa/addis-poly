@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import { StyledChart, StyledFlex } from "./styled-components/container";
 import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 import SpeakerNotesOutlinedIcon from "@material-ui/icons/SpeakerNotesOutlined";
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import DashboardBox from "./dashboardBox";
 import { getUsers } from "../services/userService";
-import { getPatients } from "../services/patientService";
+import { filterPatients, getPatients } from "../services/patientService";
+import { formatDateY } from "../utils/formatDate";
 // import LineChart from "./chart/lineChart";
 // import BarChart from "./chart/barChart";
 
@@ -19,11 +21,14 @@ class Home extends Component {
   async componentDidMount() {
     const { data: users } = await getUsers("isActive=true");
     const { data: patients } = await getPatients();
-    // const { data: todaysPatients } = await filterPatients("createdAt=");
+    const { data: todaysPatients } = await filterPatients(
+      `createdAt=${formatDateY(new Date())}`
+    );
 
     this.setState({
       numberOfUsers: users.count,
       numberOfPatients: patients.count,
+      numberOfTodaysPatient: todaysPatients.count,
     });
   }
 
@@ -35,7 +40,7 @@ class Home extends Component {
           <DashboardBox
             blue
             label="Patients"
-            value={data.numberOfPatients}
+            value={data.numberOfPatients ? data.numberOfPatients : 0}
             icon={<PeopleAltOutlinedIcon />}
           />
           <DashboardBox
@@ -47,14 +52,14 @@ class Home extends Component {
           <DashboardBox
             blue
             label="Today's Patients"
-            value={data.numberOfTodaysPatient}
+            value={data.numberOfTodaysPatient ? data.numberOfTodaysPatient : 0}
             icon={<PeopleAltOutlinedIcon />}
           />
           <DashboardBox
             black
             label="Active Users"
-            value={data.numberOfUsers}
-            icon={<SpeakerNotesOutlinedIcon />}
+            value={data.numberOfUsers ? data.numberOfUsers : 0}
+            icon={<SupervisedUserCircleIcon />}
           />
         </StyledFlex>
 

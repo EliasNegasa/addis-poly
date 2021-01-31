@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Badge,
   IconButton,
   makeStyles,
   Toolbar,
@@ -10,7 +9,6 @@ import React from "react";
 import clsx from "clsx";
 import Profile from "../auth/profile";
 import { StyledHeader } from "../styled-components/container";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import MenuIcon from "@material-ui/icons/Menu";
 
 const drawerWidth = 240;
@@ -76,11 +74,7 @@ const Header = ({ user, open, setOpen }) => {
         >
           Addis Poly Specialized Clinic
         </Typography>
-        <IconButton>
-          <Badge badgeContent={4} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
+
         <StyledHeader>
           <Profile user={user} />
         </StyledHeader>

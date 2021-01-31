@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 import { getPatient, savePatient } from "../../services/patientService";
 import Form from "../common/form";
 import { StyledFormContainer } from "../styled-components/styledForm";
@@ -22,13 +23,24 @@ class PatientForm extends Form {
       woreda: "",
       subCity: "",
       houseNo: "",
-      createdBy: "",
     },
     errors: {},
     loading: false,
     backdrop: false,
     message: "",
     genderOptions: ["Male", "Female"],
+    subCityOptions: [
+      "Addis Ketema",
+      "Akaki Kaliti",
+      "Arada",
+      "Bole",
+      "Gullele",
+      "Kirkos",
+      "Kolfe Keranio",
+      "Lideta",
+      "Nefassilk",
+      "Yeka",
+    ],
   };
 
   schema = {
@@ -37,9 +49,7 @@ class PatientForm extends Form {
     grandName: Joi.label("Grand Name"),
     gender: Joi.label("Gender"),
     age: Joi.label("Age"),
-    phone: this.state.data.phone
-      ? Joi.min(10).label("Phone")
-      : Joi.label("Phone"),
+    phone: Joi.label("Phone"),
     kebele: Joi.label("Kebele"),
     woreda: Joi.label("Woreda"),
     subCity: Joi.label("Subcity"),
@@ -48,7 +58,6 @@ class PatientForm extends Form {
 
   populatePatient = async () => {
     try {
-      // const userId = this.props.match.params.id;
       const patientId = this.props.id;
       if (patientId === "") return;
 
@@ -84,12 +93,15 @@ class PatientForm extends Form {
   doSubmit = async () => {
     const data = { ...this.state.data };
     console.log("Data", data);
+    const updatedData = _.omitBy(data, function (emp) {
+      return emp === "" || emp == null;
+    });
+    console.log("UP", updatedData);
+
     this.setState({ backdrop: true });
 
     try {
-      // const {data: patient} =
-      const { data: patient } = await savePatient(data);
-      console.log("Reseponse Logged", patient);
+      const { data: patient } = await savePatient(updatedData);
 
       this.setState({
         message: patient.result
@@ -161,7 +173,11 @@ class PatientForm extends Form {
                   <strong>Address Information:</strong>
                   {this.renderInput("kebele", "Kebele", "number")}
                   {this.renderInput("woreda", "Woreda", "number")}
-                  {this.renderInput("subCity", "Subcity/Zone")}
+                  {this.renderSelect(
+                    "subCity",
+                    "Subcity",
+                    this.state.subCityOptions
+                  )}
                   {this.renderInput("houseNo", "House No.")}
                 </StyledFormContainer>
               </StyledFlex>

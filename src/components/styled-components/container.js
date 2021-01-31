@@ -138,6 +138,9 @@ export const StyledFlex = styled.div`
     ${(props) => props.right && css`
       margin-left: auto;
     `}
+    ${(props) => props.center && css`
+      align-items: center;
+    `}
 `
 
 export const StyledBadge = styled.span`

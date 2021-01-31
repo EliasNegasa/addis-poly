@@ -5,7 +5,6 @@ import TextArea from "./textArea";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import SelectInput from "./select";
 import PreloadedSelect from "./preloadedSelect";
-import ActionButton from "./button";
 import { StyledButton } from "../styled-components/button";
 
 const Joi = require("joi-browser");
@@ -37,6 +36,11 @@ class Form extends Component {
     const obj = { [name]: value };
     const fieldschema = { [name]: this.schema[name] };
     const { error } = Joi.validate(obj, fieldschema);
+    if (name === "phone") {
+      if (value && (value.length < 10 || value.length > 16)) {
+        return "Invalid Phone No.";
+      }
+    }
     return error ? error.details[0].message : null;
   };
 
@@ -65,6 +69,7 @@ class Form extends Component {
     const data = { ...this.state.data };
     data[input.name] =
       input.type === "checkbox" ? input.checked : input.value || "";
+
     this.setState({ data, errors });
   };
 
@@ -168,8 +173,6 @@ class Form extends Component {
       />
     );
   };
-
-
 }
 
 export default Form;

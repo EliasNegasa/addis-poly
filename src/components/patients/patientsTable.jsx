@@ -10,6 +10,8 @@ import TableBox from "../common/table";
 import ActionButton from "../common/button";
 import PatientForm from "./patientForm";
 import { StyledFlex } from "../styled-components/container";
+import { StyledLink } from "../styled-components/button";
+import SearchForm from "./searchForm";
 
 const PatientsTable = ({
   patients,
@@ -21,6 +23,7 @@ const PatientsTable = ({
 }) => {
   const [openPopup, setOpenPopup] = useState(false);
   const [id, setId] = useState("");
+  const [isSearch, setIsSearch] = useState(false);
 
   const columns = [
     { path: "cardNumber", label: "Card Number" },
@@ -54,11 +57,18 @@ const PatientsTable = ({
     setId(id);
   };
 
+  const handleAdvancedSearch = (isSearch) => {
+    setOpenPopup(true);
+    setIsSearch(isSearch);
+  };
+
   return (
     <>
-      <StyledFlex>
-      <SearchBox value={searchValue} onChange={onSearchChange} />
-
+      <StyledFlex center>
+        <SearchBox value={searchValue} onChange={onSearchChange} />
+        <StyledLink onClick={() => handleAdvancedSearch(true)}>
+          Advanced Search
+        </StyledLink>
         <ActionButton
           onClick={() => setOpenPopup(true)}
           label="Add Patient"
@@ -75,15 +85,32 @@ const PatientsTable = ({
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
         setId={setId}
-        title={id ? <span>Edit Patient</span> : <span>Add Patient</span>}
+        title={
+          id ? (
+            <span>Edit Patient</span>
+          ) : isSearch ? (
+            <span>Advanced Search</span>
+          ) : (
+            <span>Add Patient</span>
+          )
+        }
       >
-        <PatientForm
-          id={id}
-          setOpenPopup={setOpenPopup}
-          openPopup={openPopup}
-          setId={setId}
-          onUpdated={onUpdated}
-        />
+        {isSearch ? (
+          <SearchForm
+            id={id}
+            setOpenPopup={setOpenPopup}
+            openPopup={openPopup}
+            onUpdated={onUpdated}
+          />
+        ) : (
+          <PatientForm
+            id={id}
+            setOpenPopup={setOpenPopup}
+            openPopup={openPopup}
+            setId={setId}
+            onUpdated={onUpdated}
+          />
+        )}
       </Popup>
     </>
   );

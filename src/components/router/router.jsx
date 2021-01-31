@@ -5,7 +5,6 @@ import LoginForm from "../auth/loginForm";
 import PatientForm from "../patients/patientForm";
 import Patients from "../patients/patients";
 import NotFound from "../notFound";
-import SignIn from "../auth/login2";
 import UserForm from "../users/userForm";
 import Users from "../users/users";
 
