@@ -1,33 +1,30 @@
 import React, { Component } from "react";
 import { StyledChart, StyledFlex } from "./styled-components/container";
 import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
-import LocalShippingOutlinedIcon from "@material-ui/icons/LocalShippingOutlined";
 import SpeakerNotesOutlinedIcon from "@material-ui/icons/SpeakerNotesOutlined";
-import MapIcon from "@material-ui/icons/Map";
 import DashboardBox from "./dashboardBox";
-import ReactPagination from "./common/reactPaginatation";
+import { getUsers } from "../services/userService";
+import { getPatients } from "../services/patientService";
 // import LineChart from "./chart/lineChart";
 // import BarChart from "./chart/barChart";
 
 class Home extends Component {
   state = {
     numberOfUsers: "",
-    numberOfJobs: "",
-    numberOfLowbeds: "",
-    numberOfRequests: "",
+    numberOfPatients: "",
+    numberOfLabs: "",
+    numberOfTodaysPatient: "",
   };
 
   async componentDidMount() {
-    // const { data: users } = await filterUsers("deleted=false");
-    // const { data: jobs } = await getJobs();
-    // const { data: lowbeds } = await getLowbeds();
-    // const { data: requests } = await getRequests();
-    // this.setState({
-    //   numberOfUsers: users.length,
-    //   numberOfJobs: jobs.length,
-    //   numberOfLowbeds: lowbeds.length,
-    //   numberOfRequests: requests.length,
-    // });
+    const { data: users } = await getUsers("isActive=true");
+    const { data: patients } = await getPatients();
+    // const { data: todaysPatients } = await filterPatients("createdAt=");
+
+    this.setState({
+      numberOfUsers: users.count,
+      numberOfPatients: patients.count,
+    });
   }
 
   render() {
@@ -38,36 +35,32 @@ class Home extends Component {
           <DashboardBox
             blue
             label="Patients"
-            value={data.numberOfUsers}
+            value={data.numberOfPatients}
             icon={<PeopleAltOutlinedIcon />}
           />
           <DashboardBox
             black
             label="Lab Reports"
-            value={data.numberOfJobs}
+            value={data.numberOfLabs ? data.numberOfLabs : 0}
             icon={<SpeakerNotesOutlinedIcon />}
           />
           <DashboardBox
             blue
             label="Today's Patients"
-            value={data.numberOfLowbeds}
+            value={data.numberOfTodaysPatient}
             icon={<PeopleAltOutlinedIcon />}
           />
           <DashboardBox
             black
-            label="Rate"
-            value={data.numberOfRequests}
+            label="Active Users"
+            value={data.numberOfUsers}
             icon={<SpeakerNotesOutlinedIcon />}
           />
         </StyledFlex>
 
         <StyledFlex>
-          <StyledChart>
-            {/* <LineChart /> */}
-          </StyledChart>
-          <StyledChart>
-            {/* <BarChart /> */}
-          </StyledChart>
+          <StyledChart>{/* <LineChart /> */}</StyledChart>
+          <StyledChart>{/* <BarChart /> */}</StyledChart>
         </StyledFlex>
       </>
     );
