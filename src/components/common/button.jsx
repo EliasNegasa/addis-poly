@@ -1,15 +1,16 @@
 import { Button, makeStyles } from "@material-ui/core";
 import React from "react";
+import { theme as myTheme } from "../../theme";
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    margin: "0 0 1rem auto",
-    backgroundColor: "#ffcd11",
-    color: "#000",
+    margin: "0 0 0 auto",
+    backgroundColor: myTheme.primary,
+    color: "#fff",
     display: "flex",
     "&:hover": {
-      backgroundColor: "#ffcd11",
-      color: "#000",
+      backgroundColor: myTheme.primary,
+      color: "#ececec",
     },
   },
 }));

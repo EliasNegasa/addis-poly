@@ -1,39 +1,36 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import { paginate } from "../../utils/paginate";
-import { getPatients } from "../../services/patientService";
+import { getUsers } from "../../services/userService";
 import Pagination from "../common/pagination";
 import { StyledPaginationContainer } from "../styled-components/container";
 import { StyledSubHeading } from "../styled-components/heading";
 import Spinner from "../common/spinner";
-import PatientsTable from "../patients/patientsTable";
+import UsersTable from "./usersTable";
 
-class Patients extends Component {
+class Users extends Component {
   state = {
-    patients: [],
+    users: [],
     currentPage: 1,
     pageSize: 10,
     searchQuery: "",
-    sortColumn: { path: "cardNumber", order: "desc" },
+    sortColumn: { path: "firstName", order: "asc" },
     loading: false,
     isUpdated: false,
   };
 
   async componentDidMount() {
     this.setState({ loading: true });
-    const { data } = await getPatients();
-    this.setState({ patients: data.patients, loading: false });
+    const { data } = await getUsers();
+    console.log("USERS", data);
+    this.setState({ users: data.users, loading: false });
   }
 
   async componentDidUpdate(prevProps, prevState) {
     if (prevState.isUpdated !== this.state.isUpdated) {
       this.setState({ loading: true });
-      const { data } = await getPatients();
-      this.setState({
-        patients: data.patients,
-        loading: false,
-        isUpdated: false,
-      });
+      const { data: users } = await getUsers();
+      this.setState({ users, loading: false, isUpdated: false });
     }
   }
 
@@ -59,46 +56,33 @@ class Patients extends Component {
       currentPage,
       searchQuery,
       sortColumn,
-      patients: allPatients,
+      users: allUsers,
     } = this.state;
 
-    let filtered = allPatients;
+    let filtered = allUsers;
     if (searchQuery)
-      filtered = allPatients.filter(
-        (patients) =>
-          (patients.cardNumber &&
-            patients.cardNumber
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase())) ||
-          (patients.firstName &&
-            patients.firstName
-              .toLowerCase()
-              .startsWith(searchQuery.toLowerCase())) ||
-          (patients.fatherName &&
-            patients.fatherName
-              .toLowerCase()
-              .startsWith(searchQuery.toLowerCase())) ||
-          (patients.grandName &&
-            patients.grandName
-              .toLowerCase()
-              .startsWith(searchQuery.toLowerCase()))
+      filtered = allUsers.filter(
+        (user) =>
+          user.firstName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+          user.lastName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+          user.phone.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
-    const patients = paginate(sorted, currentPage, pageSize);
-    return filtered ? { totalCount: filtered.length, data: patients } : "0";
+    const users = paginate(sorted, currentPage, pageSize);
+    return { totalCount: filtered.length, data: users };
   };
 
   render() {
     const { pageSize, currentPage, sortColumn, loading } = this.state;
 
-    const { totalCount, data: patients } = this.getPagedData();
+    const { totalCount, data: users } = this.getPagedData();
     return (
       <>
-        <StyledSubHeading left padding>Patients List</StyledSubHeading>
-        <PatientsTable
-          patients={patients}
+        <StyledSubHeading left>Users List</StyledSubHeading>
+        <UsersTable
+          users={users}
           sortColumn={sortColumn}
           onSort={this.handleSort}
           onSearchChange={this.handleSearch}
@@ -108,7 +92,7 @@ class Patients extends Component {
         {loading && <Spinner />}
 
         <StyledPaginationContainer>
-          <p>Showing {totalCount} Patients</p>
+          <p>Showing {totalCount} Users</p>
           <Pagination
             itemCount={totalCount}
             pageSize={pageSize}
@@ -121,4 +105,4 @@ class Patients extends Component {
   }
 }
 
-export default Patients;
+export default Users;

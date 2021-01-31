@@ -1,5 +1,6 @@
 import { FormControl, InputLabel, Select } from "@material-ui/core";
 import React from "react";
+import { Message } from "../styled-components/styledForm";
 
 const SelectInput = ({ name, label, options, errors, ...rest }) => {
   return (
@@ -26,21 +27,14 @@ const SelectInput = ({ name, label, options, errors, ...rest }) => {
       </FormControl>
 
       {errors && (
-        <div className="alert alert-danger" role="alert">
-          {errors}
-        </div>
+        <Message role="alert">
+          <div className="alert alert-danger" role="alert">
+            {errors}
+          </div>
+        </Message>
       )}
     </div>
   );
 };
 
 export default SelectInput;
-
-/* <StyledSelect name={name} id={name} {...rest} className="form-control">
-        <option value="">User Type</option>
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </StyledSelect> */

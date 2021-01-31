@@ -5,7 +5,7 @@ export const StyledButton = styled.button`
   padding: 12px 0;
   margin: 2rem 0 0;
   width: 200px;
-  color: ${(props) => props.theme.secondary} !important;
+  color: #fff !important;
   background-color: ${(props) => props.theme.primary};
   border: 1px solid ${(props) => props.theme.primary};
   border-radius: 35px;

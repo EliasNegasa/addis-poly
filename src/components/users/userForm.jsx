@@ -1,100 +1,86 @@
 import React from "react";
-import { getPatient, savePatient } from "../../services/patientService";
+import _ from "lodash";
+import { getUser, saveUser } from "../../services/userService";
 import Form from "../common/form";
 import { StyledFormContainer } from "../styled-components/styledForm";
 import Spinner from "../common/spinner";
 import Notification from "../common/notification";
+import AvatarImage from "../common/avatar";
 import BackdropLoader from "../common/Backdrop";
 import { StyledFlex } from "../styled-components/container";
 
 const Joi = require("joi-browser");
 
-class PatientForm extends Form {
+class UserForm extends Form {
   state = {
     data: {
       firstName: "",
-      fatherName: "",
-      grandName: "",
-      gender: "",
-      age: "",
+      lastName: "",
+      username: "",
+      password: "",
       phone: "",
-      kebele: "",
-      woreda: "",
-      subCity: "",
-      houseNo: "",
-      createdBy: "",
+      role: "",
     },
+    RoleSelection: ["Admin", "Reception", "Lab"],
     errors: {},
     loading: false,
     backdrop: false,
     message: "",
-    genderOptions: ["Male", "Female"],
   };
 
   schema = {
     firstName: Joi.string().required().label("First Name"),
-    fatherName: Joi.string().required().label("Last Name"),
-    grandName: Joi.label("Grand Name"),
-    gender: Joi.label("Gender"),
-    age: Joi.label("Age"),
+    lastName: Joi.string().required().label("Last Name"),
+    username: Joi.string().required().label("Username"),
+    password: Joi.string().required().min(5).label("Password"),
     phone: this.state.data.phone
-      ? Joi.min(10).label("Phone")
+      ? Joi.number().min(10).label("Phone")
       : Joi.label("Phone"),
-    kebele: Joi.label("Kebele"),
-    woreda: Joi.label("Woreda"),
-    subCity: Joi.label("Subcity"),
-    houseNo: Joi.label("House No."),
+    role: Joi.string().required().label("Role"),
   };
 
-  populatePatient = async () => {
+  populateUser = async () => {
     try {
       // const userId = this.props.match.params.id;
-      const patientId = this.props.id;
-      if (patientId === "") return;
+      const userId = this.props.id;
+      if (userId === "") return;
 
       this.setState({ loading: true });
-      const { data: patient } = await getPatient(patientId);
+      const { data: user } = await getUser(userId);
 
-      this.setState({ data: this.mapToViewModel(patient), loading: false });
+      this.setState({ data: this.mapToViewModel(user), loading: false });
     } catch (ex) {
       this.props.history.replace("/not-found");
     }
   };
 
   async componentDidMount() {
-    await this.populatePatient();
+    await this.populateUser();
   }
 
-  mapToViewModel = (patient) => {
+  mapToViewModel = (user) => {
     return {
-      id: patient.id,
-      firstName: patient.firstName,
-      fatherName: patient.fatherName,
-      grandName: patient.grandName,
-      gender: patient.gender,
-      age: patient.age,
-      phone: patient.phone,
-      kebele: patient.kebele,
-      woreda: patient.woreda,
-      subCity: patient.subCity,
-      houseNo: patient.houseNo,
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      username: user.username,
+      phone: user.phone,
+      role: user.role,
     };
   };
 
   doSubmit = async () => {
     const data = { ...this.state.data };
     console.log("Data", data);
-    this.setState({ backdrop: true });
 
+    this.setState({ backdrop: true });
     try {
-      // const {data: patient} =
-      const { data: patient } = await savePatient(data);
-      console.log("Reseponse Logged", patient);
+      const { data: user } = await saveUser(data);
 
       this.setState({
-        message: patient.result
-          ? "Patient data updated Successfully"
-          : "Patient created Successfully",
+        message: user.result
+          ? "User data updated Successfully"
+          : "User created Successfully",
         messageType: "success",
         messageTitle: "Success",
         backdrop: false,
@@ -104,6 +90,8 @@ class PatientForm extends Form {
       this.props.setOpenPopup(false);
       this.props.setId("");
       this.props.onUpdated();
+      // this.props.history.push("/users");
+      // this.props.history.push(this.props.location);
     } catch (ex) {
       if (ex.response && ex.response.status !== 200) {
         const error = ex.response.data;
@@ -124,6 +112,7 @@ class PatientForm extends Form {
       message,
       messageType,
       messageTitle,
+      data,
     } = this.state;
     return (
       <>
@@ -144,25 +133,14 @@ class PatientForm extends Form {
                 <StyledFormContainer>
                   <strong>Personal Information:</strong>
                   {this.renderInput("firstName", "First Name")}
-                  {this.renderInput("fatherName", "Father's Name")}
-                  {this.renderInput("grandName", "Grand Father's Name")}
-                  <div className="double-field">
-                    {this.renderSelect(
-                      "gender",
-                      "Gender",
-                      this.state.genderOptions
-                    )}
-                    {this.renderInput("age", "Age", "number")}
-                  </div>
-                  {this.renderInput("phone", "Phone", "number")}
+                  {this.renderInput("lastName", "Last Name")}
+                  {this.renderInput("phone", "Phone No.")}
                 </StyledFormContainer>
-
                 <StyledFormContainer>
-                  <strong>Address Information:</strong>
-                  {this.renderInput("kebele", "Kebele", "number")}
-                  {this.renderInput("woreda", "Woreda", "number")}
-                  {this.renderInput("subCity", "Subcity/Zone")}
-                  {this.renderInput("houseNo", "House No.")}
+                <strong>Account Information:</strong>
+                  {this.renderInput("username", "Username")}
+                  {this.renderInput("password", "Password", "password")}
+                  {this.renderSelect("role", "Role", this.state.RoleSelection)}
                 </StyledFormContainer>
               </StyledFlex>
               {this.renderButton("Save")}
@@ -174,4 +152,4 @@ class PatientForm extends Form {
   }
 }
 
-export default PatientForm;
+export default UserForm;

@@ -9,6 +9,7 @@ import SearchBox from "../common/searchBox";
 import TableBox from "../common/table";
 import ActionButton from "../common/button";
 import PatientForm from "./patientForm";
+import { StyledFlex } from "../styled-components/container";
 
 const PatientsTable = ({
   patients,
@@ -22,14 +23,14 @@ const PatientsTable = ({
   const [id, setId] = useState("");
 
   const columns = [
-    { path: "card_number", label: "Card Number" },
-    { path: "firstname", label: "First Name" },
-    { path: "fathername", label: "Father's Name" },
-    { path: "grandname", label: "GrandFather's Name" },
+    { path: "cardNumber", label: "Card Number" },
+    { path: "firstName", label: "First Name" },
+    { path: "fatherName", label: "Father's Name" },
+    { path: "grandName", label: "GrandFather's Name" },
     { path: "gender", label: "Gender" },
     { path: "age", label: "Age" },
     { path: "phone", label: "Phone" },
-    { path: "created_date", label: "Registered Date" },
+    { path: "createdAt", label: "Registered Date" },
     {
       key: "edit",
       content: (patient) => (
@@ -55,12 +56,15 @@ const PatientsTable = ({
 
   return (
     <>
-      <ActionButton
-        onClick={() => setOpenPopup(true)}
-        label="Add Patient"
-        icon={<PersonAddIcon />}
-      />
+      <StyledFlex>
       <SearchBox value={searchValue} onChange={onSearchChange} />
+
+        <ActionButton
+          onClick={() => setOpenPopup(true)}
+          label="Add Patient"
+          icon={<PersonAddIcon />}
+        />
+      </StyledFlex>
       <TableBox
         columns={columns}
         sortColumn={sortColumn}

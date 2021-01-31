@@ -5,6 +5,7 @@ import LocalShippingOutlinedIcon from "@material-ui/icons/LocalShippingOutlined"
 import SpeakerNotesOutlinedIcon from "@material-ui/icons/SpeakerNotesOutlined";
 import MapIcon from "@material-ui/icons/Map";
 import DashboardBox from "./dashboardBox";
+import ReactPagination from "./common/reactPaginatation";
 // import LineChart from "./chart/lineChart";
 // import BarChart from "./chart/barChart";
 
@@ -59,6 +60,7 @@ class Home extends Component {
             icon={<SpeakerNotesOutlinedIcon />}
           />
         </StyledFlex>
+
         <StyledFlex>
           <StyledChart>
             {/* <LineChart /> */}

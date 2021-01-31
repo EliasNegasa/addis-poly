@@ -6,6 +6,7 @@ import auth from "./services/authService";
 import ReactNotification from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
 import BoxContainer from "./components/layout/box";
+import SignIn from "./components/auth/login2";
 
 class App extends Component {
   state = {};

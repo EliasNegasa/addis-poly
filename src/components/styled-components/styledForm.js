@@ -49,6 +49,7 @@ export const Message = styled.span`
   padding: 3px 10px;
   top: 0;
   z-index: 9999;
+  font-size: 12px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
@@ -111,13 +112,13 @@ export const StyledSearch = styled.input`
 `
 
 export const StyledFormContainer = styled.div`
-  width: 50%;
+  width: 48%;
   max-width: 540px;
   display: inline-block;
   vertical-align: top;
   
   & .field-div {
-    margin: 15px 30px 15px 0;
+    margin: 15px 0px 15px 0px;
   }
   & .double-field {
     width: 100%;
@@ -126,7 +127,7 @@ export const StyledFormContainer = styled.div`
 
     & .field-div {
     width: 50%;
-    margin: 0 30px 15px 0;
+    margin: 0 0px 0px 0;
     }  
   }
   & .login-form .field-div {

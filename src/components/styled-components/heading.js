@@ -9,6 +9,9 @@ export const StyledHeading = styled.h2`
 export const StyledSubHeading = styled(StyledHeading)`
   font-size: 1.6rem;
   
+  ${props => props.padding && css`
+    padding-bottom: 1rem; 
+  `}
 
   ${props =>
     props.left && css`

@@ -33,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: fade(theme.palette.common.black, 0.08),
     },
-    padding: theme.spacing(1, 1, 1, 0),
+    padding: "14px 8px 12px 0px",
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "20ch",
+      width: "24ch",
     },
   },
 }));
@@ -55,7 +55,7 @@ const SearchBox = ({ value, onChange }) => {
         <InputBase
           value={value}
           onChange={(e) => onChange(e.currentTarget.value)}
-          placeholder="Search…"
+          placeholder="Search..."
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,
@@ -68,15 +68,3 @@ const SearchBox = ({ value, onChange }) => {
 };
 
 export default SearchBox;
-
-// <div className="input-group mb-3">
-//         <StyledSearch
-//           type="text"
-//           name="query"
-//           className="search-box"
-//           placeholder="Search..."
-//           value={value}
-//           onChange={(e) => onChange(e.currentTarget.value)}
-//           styles={{ backgroundImage: `url(${searchicon})` }}
-//         />
-//       </div>

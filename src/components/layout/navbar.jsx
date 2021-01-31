@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { StyledNav } from "../styled-components/container";
 import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
-import LocalShippingOutlinedIcon from "@material-ui/icons/LocalShippingOutlined";
+import SpeakerNotesOutlinedIcon from "@material-ui/icons/SpeakerNotesOutlined";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -29,7 +29,12 @@ const NavBar = () => {
 
       <StyledNav>
         <NavLink className="nav-link" to="/labs">
-          <LocalShippingOutlinedIcon className={classes.navIcon} /> Labs
+          <SpeakerNotesOutlinedIcon className={classes.navIcon} /> Labs
+        </NavLink>
+      </StyledNav>
+      <StyledNav>
+        <NavLink className="nav-link" to="/users">
+          <PeopleAltOutlinedIcon className={classes.navIcon} /> Users
         </NavLink>
       </StyledNav>
 
