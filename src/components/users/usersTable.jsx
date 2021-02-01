@@ -39,7 +39,7 @@ const UsersTable = ({
             <EditOutlinedIcon style={{ color: "#3399ff" }} />
           </span>
           <Link to={`/users/${user.id}/details`}>
-            <VisibilityOutlinedIcon style={{ color: "#000" }} />
+            <VisibilityOutlinedIcon style={{ color: "#b7b7b7" }} />
           </Link>
         </div>
       ),
@@ -84,41 +84,3 @@ const UsersTable = ({
 };
 
 export default UsersTable;
-
-// class UsersTable extends Component {
-//   columns = [
-//     { path: "firstName", label: "First Name" },
-//     { path: "lastName", label: "Last Name" },
-//     { path: "email", label: "Email" },
-//     { path: "username", label: "Username" },
-//     { path: "userType", label: "User Type" },
-//     { path: "isActivated", label: "Status" },
-//     {
-//       key: "edit",
-//       content: (user) => (
-//         <div>
-//           <Link to={`/users/${user.id}`}>
-//             <EditOutlinedIcon style={{ color: "#f9b115" }} />
-//           </Link>
-//           <Link to={`/users/${user.id}/details`}>
-//             <VisibilityOutlinedIcon style={{ color: "#000" }} />
-//           </Link>
-//         </div>
-//       ),
-//     },
-//   ];
-
-//   render() {
-//     const { users, onSort, sortColumn } = this.props;
-//     return (
-//       <>
-//         <Table
-//           columns={this.columns}
-//           sortColumn={sortColumn}
-//           onSort={onSort}
-//           data={users}
-//         />
-//       </>
-//     );
-//   }
-// }

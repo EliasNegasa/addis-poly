@@ -107,5 +107,7 @@ export const StyledButton = styled.button`
 
 export const StyledLink = styled.a`
   cursor: pointer;
-  color: ${(props) => props.theme.primary}
+  color: ${(props) => props.theme.primary};
+  padding: 0 1rem 0 0;
+  text-decoration: underline;
 `

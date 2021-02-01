@@ -22,15 +22,14 @@ class Users extends Component {
   async componentDidMount() {
     this.setState({ loading: true });
     const { data } = await getUsers();
-    console.log("USERS", data);
     this.setState({ users: data.users, loading: false });
   }
 
   async componentDidUpdate(prevProps, prevState) {
     if (prevState.isUpdated !== this.state.isUpdated) {
       this.setState({ loading: true });
-      const { data: users } = await getUsers();
-      this.setState({ users, loading: false, isUpdated: false });
+      const { data } = await getUsers();
+      this.setState({ users: data.users, loading: false, isUpdated: false });
     }
   }
 
@@ -63,15 +62,26 @@ class Users extends Component {
     if (searchQuery)
       filtered = allUsers.filter(
         (user) =>
-          user.firstName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
-          user.lastName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
-          user.phone.toLowerCase().startsWith(searchQuery.toLowerCase())
+          (user.firstName &&
+            user.firstName
+              .toLowerCase()
+              .startsWith(searchQuery.toLowerCase())) ||
+          (user.lastName &&
+            user.lastName
+              .toLowerCase()
+              .startsWith(searchQuery.toLowerCase())) ||
+          (user.username &&
+            user.username
+              .toLowerCase()
+              .startsWith(searchQuery.toLowerCase())) ||
+          (user.phone &&
+            user.phone.toLowerCase().startsWith(searchQuery.toLowerCase()))
       );
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
     const users = paginate(sorted, currentPage, pageSize);
-    return { totalCount: filtered.length, data: users };
+    return filtered ? { totalCount: filtered.length, data: users } : 0;
   };
 
   render() {
@@ -80,7 +90,9 @@ class Users extends Component {
     const { totalCount, data: users } = this.getPagedData();
     return (
       <>
-        <StyledSubHeading left>Users List</StyledSubHeading>
+        <StyledSubHeading left padding>
+          Users List
+        </StyledSubHeading>
         <UsersTable
           users={users}
           sortColumn={sortColumn}

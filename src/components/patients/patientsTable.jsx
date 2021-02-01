@@ -20,10 +20,12 @@ const PatientsTable = ({
   searchValue,
   onSearchChange,
   onUpdated,
+  onCount,
 }) => {
   const [openPopup, setOpenPopup] = useState(false);
   const [id, setId] = useState("");
   const [isSearch, setIsSearch] = useState(false);
+  const [searchResult, setSearchResult] = useState("");
 
   const columns = [
     { path: "cardNumber", label: "Card Number" },
@@ -45,7 +47,7 @@ const PatientsTable = ({
             <EditOutlinedIcon style={{ color: "#f9b115" }} />
           </span>
           <Link to={`/patients/${patient.id}/details`}>
-            <VisibilityOutlinedIcon style={{ color: "#000" }} />
+            <VisibilityOutlinedIcon style={{ color: "#b7b7b7" }} />
           </Link>
         </div>
       ),
@@ -58,7 +60,7 @@ const PatientsTable = ({
   };
 
   const handleAdvancedSearch = (isSearch) => {
-    setOpenPopup(true);
+    isSearch && setOpenPopup(true);
     setIsSearch(isSearch);
   };
 
@@ -66,9 +68,20 @@ const PatientsTable = ({
     <>
       <StyledFlex center>
         <SearchBox value={searchValue} onChange={onSearchChange} />
-        <StyledLink onClick={() => handleAdvancedSearch(true)}>
-          Advanced Search
-        </StyledLink>
+        {isSearch ? (
+          <>
+            <StyledLink onClick={() => handleAdvancedSearch(true)}>
+              Edit Search
+            </StyledLink>{" "}
+            <StyledLink onClick={() => handleAdvancedSearch(false)}>
+              Clear Search
+            </StyledLink>
+          </>
+        ) : (
+          <StyledLink onClick={() => handleAdvancedSearch(true)}>
+            Advanced Search
+          </StyledLink>
+        )}
         <ActionButton
           onClick={() => setOpenPopup(true)}
           label="Add Patient"
@@ -79,7 +92,7 @@ const PatientsTable = ({
         columns={columns}
         sortColumn={sortColumn}
         onSort={onSort}
-        data={patients}
+        data={isSearch && searchResult ? searchResult : patients}
       />
       <Popup
         openPopup={openPopup}
@@ -97,10 +110,11 @@ const PatientsTable = ({
       >
         {isSearch ? (
           <SearchForm
-            id={id}
             setOpenPopup={setOpenPopup}
             openPopup={openPopup}
             onUpdated={onUpdated}
+            onCount={onCount}
+            setSearchResult={setSearchResult}
           />
         ) : (
           <PatientForm

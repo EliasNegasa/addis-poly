@@ -54,7 +54,8 @@ class SearchForm extends Form {
       this.setState({
         backdrop: false,
       });
-
+      this.props.setSearchResult(data.patients);
+      this.props.onCount(data.count);
       this.props.setOpenPopup(false);
     } catch (ex) {
       if (ex.response && ex.response.status !== 200) {
@@ -66,10 +67,7 @@ class SearchForm extends Form {
   };
 
   render() {
-    const {
-      backdrop,
-      loading,
-    } = this.state;
+    const { backdrop, loading } = this.state;
 
     return (
       <>

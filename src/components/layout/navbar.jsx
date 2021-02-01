@@ -4,6 +4,7 @@ import { StyledNav } from "../styled-components/container";
 import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
 import SpeakerNotesOutlinedIcon from "@material-ui/icons/SpeakerNotesOutlined";
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -34,7 +35,7 @@ const NavBar = () => {
       </StyledNav>
       <StyledNav>
         <NavLink className="nav-link" to="/users">
-          <PeopleAltOutlinedIcon className={classes.navIcon} /> Users
+          <SupervisedUserCircleIcon className={classes.navIcon} /> Users
         </NavLink>
       </StyledNav>
 

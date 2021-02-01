@@ -37,7 +37,7 @@ class Form extends Component {
     const fieldschema = { [name]: this.schema[name] };
     const { error } = Joi.validate(obj, fieldschema);
     if (name === "phone") {
-      if (value && (value.length < 10 || value.length > 16)) {
+      if (value && (value.length < 10 || value.length > 17)) {
         return "Invalid Phone No.";
       }
     }

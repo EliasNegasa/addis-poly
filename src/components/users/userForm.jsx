@@ -5,7 +5,6 @@ import Form from "../common/form";
 import { StyledFormContainer } from "../styled-components/styledForm";
 import Spinner from "../common/spinner";
 import Notification from "../common/notification";
-import AvatarImage from "../common/avatar";
 import BackdropLoader from "../common/Backdrop";
 import { StyledFlex } from "../styled-components/container";
 
@@ -20,6 +19,7 @@ class UserForm extends Form {
       password: "",
       phone: "",
       role: "",
+      isActive: true,
     },
     RoleSelection: ["Admin", "Reception", "Lab"],
     errors: {},
@@ -33,15 +33,13 @@ class UserForm extends Form {
     lastName: Joi.string().required().label("Last Name"),
     username: Joi.string().required().label("Username"),
     password: Joi.string().required().min(5).label("Password"),
-    phone: this.state.data.phone
-      ? Joi.number().min(10).label("Phone")
-      : Joi.label("Phone"),
+    phone: Joi.label("Phone"),
     role: Joi.string().required().label("Role"),
+    isActive: Joi.boolean().label("Status"),
   };
 
   populateUser = async () => {
     try {
-      // const userId = this.props.match.params.id;
       const userId = this.props.id;
       if (userId === "") return;
 
@@ -50,6 +48,7 @@ class UserForm extends Form {
 
       this.setState({ data: this.mapToViewModel(user), loading: false });
     } catch (ex) {
+      console.log("NOT FOUND");
       this.props.history.replace("/not-found");
     }
   };
@@ -66,6 +65,7 @@ class UserForm extends Form {
       username: user.username,
       phone: user.phone,
       role: user.role,
+      isActive: user.isActive,
     };
   };
 
@@ -73,9 +73,13 @@ class UserForm extends Form {
     const data = { ...this.state.data };
     console.log("Data", data);
 
+    const updatedData = _.omitBy(data, function (emp) {
+      return emp === "" || emp == null;
+    });
+
     this.setState({ backdrop: true });
     try {
-      const { data: user } = await saveUser(data);
+      const { data: user } = await saveUser(updatedData);
 
       this.setState({
         message: user.result
@@ -90,8 +94,6 @@ class UserForm extends Form {
       this.props.setOpenPopup(false);
       this.props.setId("");
       this.props.onUpdated();
-      // this.props.history.push("/users");
-      // this.props.history.push(this.props.location);
     } catch (ex) {
       if (ex.response && ex.response.status !== 200) {
         const error = ex.response.data;
@@ -112,7 +114,6 @@ class UserForm extends Form {
       message,
       messageType,
       messageTitle,
-      data,
     } = this.state;
     return (
       <>
@@ -137,10 +138,11 @@ class UserForm extends Form {
                   {this.renderInput("phone", "Phone No.")}
                 </StyledFormContainer>
                 <StyledFormContainer>
-                <strong>Account Information:</strong>
+                  <strong>Account Information:</strong>
                   {this.renderInput("username", "Username")}
                   {this.renderInput("password", "Password", "password")}
                   {this.renderSelect("role", "Role", this.state.RoleSelection)}
+                  {this.renderCheckBox("isActive", "Active")}
                 </StyledFormContainer>
               </StyledFlex>
               {this.renderButton("Save")}

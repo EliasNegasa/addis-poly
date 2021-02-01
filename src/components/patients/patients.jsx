@@ -17,12 +17,17 @@ class Patients extends Component {
     sortColumn: { path: "cardNumber", order: "desc" },
     loading: false,
     isUpdated: false,
+    count: 0,
   };
 
   async componentDidMount() {
     this.setState({ loading: true });
     const { data } = await getPatients();
-    this.setState({ patients: data.patients, loading: false });
+    this.setState({
+      patients: data.patients,
+      count: data.count,
+      loading: false,
+    });
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -39,6 +44,10 @@ class Patients extends Component {
 
   handleIsUpdated = () => {
     this.setState({ isUpdated: true });
+  };
+
+  handleCount = (cnt) => {
+    this.setState({ count: cnt });
   };
 
   handlePageChange = (page) => {
@@ -87,7 +96,7 @@ class Patients extends Component {
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
     const patients = paginate(sorted, currentPage, pageSize);
-    return filtered ? { totalCount: filtered.length, data: patients } : "0";
+    return filtered ? { totalCount: filtered.length, data: patients } : 0;
   };
 
   render() {
@@ -96,7 +105,9 @@ class Patients extends Component {
     const { totalCount, data: patients } = this.getPagedData();
     return (
       <>
-        <StyledSubHeading left padding>Patients List</StyledSubHeading>
+        <StyledSubHeading left padding>
+          Patients List
+        </StyledSubHeading>
         <PatientsTable
           patients={patients}
           sortColumn={sortColumn}
@@ -104,11 +115,12 @@ class Patients extends Component {
           onSearchChange={this.handleSearch}
           searchValue={this.searchQuery}
           onUpdated={this.handleIsUpdated}
+          onCount={this.handleCount}
         />
         {loading && <Spinner />}
 
         <StyledPaginationContainer>
-          <p>Showing {totalCount} Patients</p>
+          <p>Showing {this.state.count} Patients</p>
           <Pagination
             itemCount={totalCount}
             pageSize={pageSize}
