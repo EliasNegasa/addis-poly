@@ -135,6 +135,11 @@ export const StyledFlex = styled.div`
       max-width: 350px;
     `}
 
+    ${(props) => props.wrap && css`
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    `}
+
     ${(props) => props.right && css`
       margin-left: auto;
     `}

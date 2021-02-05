@@ -28,8 +28,15 @@ class Users extends Component {
   async componentDidUpdate(prevProps, prevState) {
     if (prevState.isUpdated !== this.state.isUpdated) {
       this.setState({ loading: true });
-      const { data } = await getUsers();
-      this.setState({ users: data.users, loading: false, isUpdated: false });
+      try {
+        const { data } = await getUsers();
+        this.setState({ users: data.users, loading: false, isUpdated: false });
+      } catch (ex) {
+        if (ex.response && ex.response.status === 401) {
+          console.log("TOKEN EXPIRED");
+          localStorage.removeItem("token");
+        }
+      }
     }
   }
 

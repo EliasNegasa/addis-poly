@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyledChart, StyledFlex } from "./styled-components/container";
 import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 import SpeakerNotesOutlinedIcon from "@material-ui/icons/SpeakerNotesOutlined";
-import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import DashboardBox from "./dashboardBox";
 import { getUsers } from "../services/userService";
 import { filterPatients, getPatients } from "../services/patientService";
@@ -19,17 +19,24 @@ class Home extends Component {
   };
 
   async componentDidMount() {
-    const { data: users } = await getUsers("isActive=true");
-    const { data: patients } = await getPatients();
-    const { data: todaysPatients } = await filterPatients(
-      `createdAt=${formatDateY(new Date())}`
-    );
+    try {
+      const { data: users } = await getUsers("isActive=true");
+      const { data: patients } = await getPatients();
+      const { data: todaysPatients } = await filterPatients(
+        `createdAt=${formatDateY(new Date())}`
+      );
 
-    this.setState({
-      numberOfUsers: users.count,
-      numberOfPatients: patients.count,
-      numberOfTodaysPatient: todaysPatients.count,
-    });
+      this.setState({
+        numberOfUsers: users.count,
+        numberOfPatients: patients.count,
+        numberOfTodaysPatient: todaysPatients.count,
+      });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 401) {
+        console.log("TOKEN EXPIRED");
+        localStorage.removeItem("token");
+      }
+    }
   }
 
   render() {

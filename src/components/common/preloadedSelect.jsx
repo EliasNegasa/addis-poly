@@ -4,6 +4,7 @@ import _ from "lodash";
 
 const getIndex = (options, value) => {
   return _.findIndex(options, function (option) {
+    // eslint-disable-next-line eqeqeq
     return option.value == value;
   });
 };

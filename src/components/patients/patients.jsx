@@ -22,12 +22,19 @@ class Patients extends Component {
 
   async componentDidMount() {
     this.setState({ loading: true });
-    const { data } = await getPatients();
-    this.setState({
-      patients: data.patients,
-      count: data.count,
-      loading: false,
-    });
+    try {
+      const { data } = await getPatients();
+      this.setState({
+        patients: data.patients,
+        count: data.count,
+        loading: false,
+      });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 401) {
+        console.log("TOKEN EXPIRED");
+        localStorage.removeItem("token");
+      }
+    }
   }
 
   async componentDidUpdate(prevProps, prevState) {

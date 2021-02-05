@@ -7,6 +7,10 @@ import Patients from "../patients/patients";
 import NotFound from "../notFound";
 import UserForm from "../users/userForm";
 import Users from "../users/users";
+import Labs from "../labs/labRequest/labs";
+import LabForm from "../labs/labRequest/labForm";
+import TestCategory from "../labTest/testCategory/testCategory";
+import TestType from "../labTest/testType/testType";
 
 const Router = () => {
   return (
@@ -15,6 +19,13 @@ const Router = () => {
       <Route path="/patients" component={Patients} />
       <Route path="/users/:id" component={UserForm} />
       <Route path="/users" component={Users} />
+      <Route path="/labs/:id" component={LabForm} />
+      <Route path="/labs" component={Labs} />
+      <Route path="/testCategory" component={TestCategory} />
+      <Route path="/testCategory/:id" component={TestCategory} />
+      <Route path="/testType" component={TestType} />
+      <Route path="/testType/:id" component={TestType} />
+
       <Route path="/logout" component={LoginForm} />
       {/* <Route path="/logout" component={SignIn} /> */}
 
