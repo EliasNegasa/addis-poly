@@ -178,6 +178,12 @@ export const StyledBadge = styled.span`
     css`
       background-color: #636f83;
     `}
+
+    ${(props) =>
+    props.new &&
+    css`
+      background-color: #ff0000;
+    `}
 `
 
 export const StyledPaginationContainer = styled.div`

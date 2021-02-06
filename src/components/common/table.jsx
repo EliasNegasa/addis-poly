@@ -7,7 +7,7 @@ const TableBox = ({ columns, sortColumn, data, onSort }) => {
   return (
     <>
       <br />
-      <Table size="md" stickyHeader aria-label="sticky table">
+      <Table size="medium" stickyHeader aria-label="sticky table">
         <THead columns={columns} onSort={onSort} sortColumn={sortColumn} />
 
         <TBody data={data} columns={columns} />

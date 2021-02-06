@@ -6,6 +6,7 @@ import { Checkbox, FormControlLabel } from "@material-ui/core";
 import SelectInput from "./select";
 import PreloadedSelect from "./preloadedSelect";
 import { StyledButton } from "../styled-components/button";
+import MultiSelect from "./multiSelect";
 
 const Joi = require("joi-browser");
 
@@ -165,6 +166,19 @@ class Form extends Component {
     const { data } = this.state;
     return (
       <PreloadedSelect
+        options={options}
+        placeholder={label}
+        onChange={(e) => this.handlePreloadedSelectChange(e, name)}
+        // setValue={data[name] ? data[name] : undefined}
+        value={data[name]}
+      />
+    );
+  };
+
+  renderMultiSelect = (name, label, options) => {
+    const { data } = this.state;
+    return (
+      <MultiSelect
         options={options}
         placeholder={label}
         onChange={(e) => this.handlePreloadedSelectChange(e, name)}

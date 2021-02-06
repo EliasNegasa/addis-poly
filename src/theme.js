@@ -4,6 +4,7 @@ export const theme = {
   primary: "#3399ff",
   secondary: "#313945",
   grey: "#ebedef",
+  dark: "#252b32",
   boxShadow: "0 10px 10px rgba(0, 0, 0, 0.08)",
   transition: "all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1)",
 };
