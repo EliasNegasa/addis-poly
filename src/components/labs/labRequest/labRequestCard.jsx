@@ -9,7 +9,6 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import ActionButton from "../../common/button";
 import { StyledBadge, StyledFlex } from "../../styled-components/container";
-import Popup from "../../common/popup";
 import LabRequestForm from "./labRequestForm";
 import FullScreenDialog from "../../common/fullScreenDialog";
 
@@ -88,6 +87,11 @@ const LabRequestCard = ({ labRequests, onUpdated }) => {
               <Typography variant="h6" component="h2">
                 {`${labRequest.patient.firstName} ${labRequest.patient.fatherName} ${labRequest.patient.grandName}`}
               </Typography>
+              <>
+                {labRequest.testTypes.map((testType) => (
+                  <span style={{ fontSize: "11px" }}>{testType.name}, </span>
+                ))}
+              </>
               <Typography className={classes.badge} color="textSecondary">
                 {labRequest.status === "New" ? (
                   <StyledBadge new>{labRequest.status}</StyledBadge>

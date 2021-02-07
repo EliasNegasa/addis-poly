@@ -11,6 +11,8 @@ import {
 } from "../../../services/labRequestService";
 import { getTestCategories } from "../../../services/testCategoryService";
 import { getPatients } from "../../../services/patientService";
+import { getTestTypes } from "../../../services/testTypeService";
+import { StyledFlex } from "../../styled-components/container";
 const Joi = require("joi-browser");
 
 class LabRequestForm extends Form {
@@ -31,7 +33,7 @@ class LabRequestForm extends Form {
   };
 
   schema = {
-    // testCategoryId: Joi.number().required().label("Test Category"),
+    // type: Joi.boolean().label("Test Type"),
   };
 
   populateLabRequest = async () => {
@@ -57,7 +59,6 @@ class LabRequestForm extends Form {
       value: d.id,
       label: `${d.cardNumber} | ${d.firstName} ${d.fatherName}`,
     }));
-    console.log("OPTIONS", options);
     this.setState({ patientOptions: options });
   }
 
@@ -68,12 +69,23 @@ class LabRequestForm extends Form {
       value: d.id,
       label: `${d.name}`,
     }));
-    console.log("OPTIONS", options);
     this.setState({ testCategoryOptions: options });
+  }
+
+  async getTestTypeOptions() {
+    this.setState({ loading: true });
+    const { data } = await getTestTypes();
+    const options = data.testTypes.map((d) => ({
+      value: d.id,
+      label: d.name,
+      category: d.testCategoryId,
+    }));
+    this.setState({ testTypeOptions: options });
   }
 
   async componentDidMount() {
     await this.getTestCategoryOptions();
+    await this.getTestTypeOptions();
     await this.getPatientOptions();
     await this.populateLabRequest();
   }
@@ -86,16 +98,35 @@ class LabRequestForm extends Form {
 
   doSubmit = async () => {
     const data = { ...this.state.data };
-    console.log("Data", data);
 
-    const updatedData = _.omitBy(data, function (emp) {
-      return emp === "" || emp == null;
-    });
-    console.log("UP", updatedData);
+    let typeId = [];
+
+    _.forEach(
+      _.keys(
+        _.pickBy(
+          _.pickBy(data, function (value, key) {
+            return _.startsWith(key, "type");
+          }),
+          function (value, key) {
+            return value === true;
+          }
+        )
+      ),
+      function (value) {
+        typeId.push(parseInt(_.replace(value, "type", "")));
+      }
+    );
+
+    const newData = {
+      testTypesId: _.toString(typeId),
+      patientId: data.patientId,
+    };
+
+    console.log("NEW DATA", newData);
 
     this.setState({ backdrop: true });
     try {
-      const { data: labRequest } = await saveLabRequest(data);
+      const { data: labRequest } = await saveLabRequest(newData);
 
       this.setState({
         message: labRequest.result
@@ -130,6 +161,7 @@ class LabRequestForm extends Form {
       message,
       messageType,
       messageTitle,
+      data,
     } = this.state;
     return (
       <>
@@ -144,22 +176,51 @@ class LabRequestForm extends Form {
                 type={messageType}
               />
             )}
-            <StyledFormContainer oneColumn>
-              <div className="login-form">
-                <form onSubmit={this.handleSubmit}>
-                  {this.renderPreloadedSelect(
-                    "patientId",
-                    "Patient",
-                    this.state.patientOptions
-                  )}
-                  {this.renderMultiSelect(
-                    "testCategoryId",
-                    "Test Category",
-                    this.state.testCategoryOptions
-                  )}
-                  {this.renderButton("Save")}
-                </form>
-              </div>
+            <StyledFormContainer fullWidth>
+              <form onSubmit={this.handleSubmit}>
+                {this.renderPreloadedSelect(
+                  "patientId",
+                  "Patient",
+                  this.state.patientOptions
+                )}
+                {this.renderMultiSelect(
+                  "testCategoryId",
+                  "Test Category",
+                  this.state.testCategoryOptions
+                )}
+                <StyledFlex wrap>
+                  {!_.isEmpty(data.testCategoryId) &&
+                    data.testCategoryId.map((testCategory) => {
+                      return (
+                        <div key={testCategory} style={{ margin: "1rem" }}>
+                          <strong>
+                            {
+                              _.find(this.state.testCategoryOptions, [
+                                "value",
+                                testCategory,
+                              ]).label
+                            }
+                          </strong>
+
+                          {_.filter(this.state.testTypeOptions, [
+                            "category",
+                            testCategory.toString(),
+                          ]).map((testType) => {
+                            return (
+                              <div key={testType.value}>
+                                {this.renderCheckBox(
+                                  `type${testType.value}`,
+                                  `${testType.label}`
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      );
+                    })}
+                </StyledFlex>
+                {this.renderButton("Submit Request")}
+              </form>
             </StyledFormContainer>
           </>
         )}

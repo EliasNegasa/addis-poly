@@ -19,7 +19,7 @@ const MultiSelect = ({ placeholder, options, value, ...rest }) => {
           isMulti
           closeMenuOnSelect={false}
           {...rest}
-          value={options ? options[getIndex(options, value)] : ""}
+          // value={options ? options[getIndex(options, value)] : ""}
           // selectValue={options ? options[getIndex(options, value)] : ""}
         />
       </div>

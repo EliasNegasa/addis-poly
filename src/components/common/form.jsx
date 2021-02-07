@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import Input from "./input";
 import SaveIcon from "@material-ui/icons/Save";
 import TextArea from "./textArea";
@@ -35,7 +36,7 @@ class Form extends Component {
 
   validateProperty = ({ name, value }) => {
     const obj = { [name]: value };
-    const fieldschema = { [name]: this.schema[name] };
+    const fieldschema = { [name]: this.schema[name] ? this.schema[name] : "" };
     const { error } = Joi.validate(obj, fieldschema);
     if (name === "phone") {
       if (value && (value.length < 10 || value.length > 17)) {
@@ -70,7 +71,6 @@ class Form extends Component {
     const data = { ...this.state.data };
     data[input.name] =
       input.type === "checkbox" ? input.checked : input.value || "";
-
     this.setState({ data, errors });
   };
 
@@ -80,12 +80,17 @@ class Form extends Component {
     this.setState({ data });
   }
 
+  handleMultiSelectChange(e, name) {
+    const data = { ...this.state.data };
+    let valueArray = _.map(e, "value");
+    data[name] = valueArray;
+    this.setState({ data });
+  }
+
   handleDateChange = (date, name) => {
     const data = { ...this.state.data };
-    console.log("DATE CLICKED", date);
     data[name] = date;
     this.setState({ data });
-    console.log("DATA", data);
   };
 
   renderButton = (label) => {
@@ -126,7 +131,7 @@ class Form extends Component {
             onChange={this.handleChange}
             name={name}
             color="primary"
-            checked={data[name]}
+            checked={data[name] ? data[name] : false}
             errors={errors[name]}
           />
         }
@@ -176,14 +181,14 @@ class Form extends Component {
   };
 
   renderMultiSelect = (name, label, options) => {
-    const { data } = this.state;
+    // const { data } = this.state;
     return (
       <MultiSelect
         options={options}
         placeholder={label}
-        onChange={(e) => this.handlePreloadedSelectChange(e, name)}
+        onChange={(e) => this.handleMultiSelectChange(e, name)}
         // setValue={data[name] ? data[name] : undefined}
-        value={data[name]}
+        // value={data[name]}
       />
     );
   };

@@ -157,6 +157,15 @@ export const StyledFormContainer = styled.div`
       width: 33.333%;
     `}
 
+  ${(props) =>
+    props.fullWidth &&
+    css`
+      width: 100%;
+      max-width: 95%;
+      margin: 4rem auto 1rem;
+      display: block;
+    `}
+
     ${(props) =>
     props.oneColumn &&
     css`
