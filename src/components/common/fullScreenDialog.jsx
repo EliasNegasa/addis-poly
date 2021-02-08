@@ -21,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginLeft: theme.spacing(2),
     flex: 1,
+    color: "#39f",
+    padding: "12px",
   },
 }));
 
@@ -50,7 +52,9 @@ export default function FullScreenDialog({
             <Toolbar>
               <StyledFlex>
                 <div style={{ flexGrow: 1, margin: 0 }}>
-                  <Typography variant="h6">{title}</Typography>
+                  <Typography className={classes.title} variant="h6">
+                    {title}
+                  </Typography>
                 </div>
                 <IconButton
                   onClick={() => {

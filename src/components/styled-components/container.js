@@ -182,7 +182,7 @@ export const StyledBadge = styled.span`
     ${(props) =>
     props.new &&
     css`
-      background-color: #ff0000;
+      background-color: #da0000;
     `}
 `
 

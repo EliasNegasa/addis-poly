@@ -192,7 +192,13 @@ class LabRequestForm extends Form {
                   {!_.isEmpty(data.testCategoryId) &&
                     data.testCategoryId.map((testCategory) => {
                       return (
-                        <div key={testCategory} style={{ margin: "1rem" }}>
+                        <div
+                          key={testCategory}
+                          style={{
+                            padding: "1rem",
+                            borderLeft: "1px solid rgba(0, 0, 0, 0.12)",
+                          }}
+                        >
                           <strong>
                             {
                               _.find(this.state.testCategoryOptions, [

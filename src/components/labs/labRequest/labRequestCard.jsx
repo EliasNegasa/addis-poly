@@ -19,13 +19,13 @@ const useStyles = makeStyles({
     margin: "1rem",
   },
   rootRed: {
-    borderLeft: "5px solid #ff0000",
+    borderLeft: "2px solid #da0000",
   },
   rootYellow: {
-    borderLeft: "5px solid #f9b115",
+    borderLeft: "2px solid #f9b115",
   },
   rootGreen: {
-    borderLeft: "5px solid #2eb85c",
+    borderLeft: "2px solid #2eb85c",
   },
   cardNumber: {
     fontSize: 14,
@@ -38,6 +38,9 @@ const useStyles = makeStyles({
   },
   btn: {
     margin: "0 0 0 auto",
+  },
+  name: {
+    color: "#828282",
   },
 });
 
@@ -84,14 +87,24 @@ const LabRequestCard = ({ labRequests, onUpdated }) => {
               >
                 {labRequest.patient.cardNumber}
               </Typography>
-              <Typography variant="h6" component="h2">
+              <Typography variant="h6" component="h2" className={classes.name}>
                 {`${labRequest.patient.firstName} ${labRequest.patient.fatherName} ${labRequest.patient.grandName}`}
               </Typography>
-              <>
+              {/* <>
                 {labRequest.testTypes.map((testType) => (
                   <span style={{ fontSize: "11px" }}>{testType.name}, </span>
                 ))}
-              </>
+              </> */}
+              {labRequest.physician && (
+                <Typography style={{ fontSize: "11px" }}>
+                  Requested By: {labRequest.physician.firstName}
+                </Typography>
+              )}
+              {labRequest.updater && (
+                <Typography style={{ fontSize: "11px" }}>
+                  Result By: {labRequest.updater.firstName}
+                </Typography>
+              )}
               <Typography className={classes.badge} color="textSecondary">
                 {labRequest.status === "New" ? (
                   <StyledBadge new>{labRequest.status}</StyledBadge>
@@ -106,6 +119,10 @@ const LabRequestCard = ({ labRequests, onUpdated }) => {
               {labRequest.status === "Done" ? (
                 <Button size="small" className={classes.btn}>
                   View Result
+                </Button>
+              ) : labRequest.status === "New" ? (
+                <Button size="small" className={classes.btn}>
+                  Take
                 </Button>
               ) : (
                 <></>
