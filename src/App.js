@@ -6,7 +6,6 @@ import auth from "./services/authService";
 import ReactNotification from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
 import BoxContainer from "./components/layout/box";
-import SignIn from "./components/auth/login2";
 
 class App extends Component {
   state = {};
@@ -30,10 +29,9 @@ class App extends Component {
                 if (!user) {
                   return <Redirect to="/login" />;
                 }
-                return <Home {...props} user={user} />;
+                return <BoxContainer {...props} user={user} />;
               }}
             />
-            <Route path="/login/confirmed" component={LoginForm} />
             <Route exact path="/login" component={LoginForm} />
           </>}
 

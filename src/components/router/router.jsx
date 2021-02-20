@@ -30,7 +30,6 @@ const Router = () => {
       <Route path="/testType/:id" component={TestType} />
 
       <Route path="/logout" component={LoginForm} />
-      {/* <Route path="/logout" component={SignIn} /> */}
 
       <Route path="/dashboard" component={Home} />
       <Redirect from="/" to="/dashboard" />

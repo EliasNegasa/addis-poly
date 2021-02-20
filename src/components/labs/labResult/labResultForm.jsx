@@ -141,11 +141,16 @@ class LabResultForm extends Form {
 
             <StyledFormContainer fullWidth>
               <>
-                <strong>Patient Name: </strong>
+                <strong>Card No: </strong>
+                {labRequest && `${labRequest.patient.cardNumber}`}
+              </>
+              <>
+                <br />
+                <strong>Name: </strong>
                 {labRequest &&
                   `${labRequest.patient.firstName} ${labRequest.patient.fatherName} ${labRequest.patient.grandName}`}
               </>
-              <form onSubmit={this.handleSubmit}>
+              <form onSubmit={this.handleSubmit} style={{ margin: "2rem 0" }}>
                 <StyledFlex wrapFlex>
                   {labRequest &&
                     labRequest.testCategories.map((testCategory) => {

@@ -41,7 +41,7 @@ const TestTypeList = ({ testTypes, onUpdated }) => {
         label="Add Test Type"
         icon={<AddIcon />}
       />
-      <StyledFlex wrap>
+      <StyledFlex wrapFlex>
         {testTypes.map((testType) => (
           <div className={classes.root} key={testType.id}>
             <List>
