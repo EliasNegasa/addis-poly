@@ -9,14 +9,21 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(2),
     },
   },
+  spinner: {
+    color: "#000",
+  },
 }));
 
-export default function Spinner() {
+export default function Spinner({ size }) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <CircularProgress color="secondary" />
+      <CircularProgress
+        color="secondary"
+        className={classes.spinner}
+        size={size ? size : 40}
+      />
     </div>
   );
 }

@@ -7,6 +7,7 @@ import DashboardBox from "./dashboardBox";
 import { getUsers } from "../services/userService";
 import { filterPatients, getPatients } from "../services/patientService";
 import { formatDateY } from "../utils/formatDate";
+import Spinner from "./common/spinner";
 // import LineChart from "./chart/lineChart";
 // import BarChart from "./chart/barChart";
 
@@ -16,9 +17,11 @@ class Home extends Component {
     numberOfPatients: "",
     numberOfLabs: "",
     numberOfTodaysPatient: "",
+    loading: false,
   };
 
   async componentDidMount() {
+    this.setState({ loading: true });
     try {
       const { data: users } = await getUsers("isActive=true");
       const { data: patients } = await getPatients();
@@ -30,6 +33,7 @@ class Home extends Component {
         numberOfUsers: users.count,
         numberOfPatients: patients.count,
         numberOfTodaysPatient: todaysPatients.count,
+        loading: false,
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 401) {
@@ -40,33 +44,43 @@ class Home extends Component {
   }
 
   render() {
-    const data = this.state;
+    const {
+      numberOfUsers,
+      numberOfPatients,
+      numberOfLabs,
+      numberOfTodaysPatient,
+      loading,
+    } = this.state;
     return (
       <>
         <StyledFlex>
           <DashboardBox
             blue
             label="Patients"
-            value={data.numberOfPatients ? data.numberOfPatients : 0}
+            value={numberOfPatients ? numberOfPatients : 0}
             icon={<PeopleAltOutlinedIcon />}
+            loading={loading}
           />
           <DashboardBox
             black
             label="Lab Reports"
-            value={data.numberOfLabs ? data.numberOfLabs : 0}
+            value={numberOfLabs ? numberOfLabs : 0}
             icon={<SpeakerNotesOutlinedIcon />}
+            loading={loading}
           />
           <DashboardBox
             blue
             label="Today's Patients"
-            value={data.numberOfTodaysPatient ? data.numberOfTodaysPatient : 0}
+            value={numberOfTodaysPatient ? numberOfTodaysPatient : 0}
             icon={<PeopleAltOutlinedIcon />}
+            loading={loading}
           />
           <DashboardBox
             black
             label="Active Users"
-            value={data.numberOfUsers ? data.numberOfUsers : 0}
+            value={numberOfUsers ? numberOfUsers : 0}
             icon={<SupervisedUserCircleIcon />}
+            loading={loading}
           />
         </StyledFlex>
 

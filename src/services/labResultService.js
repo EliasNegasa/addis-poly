@@ -13,9 +13,9 @@ export function getLabResults(resultId) {
 
 export function saveLabResult(result) {
     if (result.id) {
-        return http.put(apiEndpoint, result);
+        return http.put(`${apiEndpoint}/bulk`, result);
     }
-    return http.post(apiEndpoint, result);
+    return http.post(`${apiEndpoint}/bulk`, result);
 }
 
 export function deleteLabResult(resultId) {

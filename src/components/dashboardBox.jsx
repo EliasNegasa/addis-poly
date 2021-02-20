@@ -1,14 +1,16 @@
 import React from "react";
+import Spinner from "./common/spinner";
 import { StyledFlex } from "./styled-components/container";
 import { StyledDashboardCard } from "./styled-components/styledDashboard";
 
-const DashboardBox = ({ label, value, icon, ...rest }) => {
+const DashboardBox = ({ label, value, icon, loading, ...rest }) => {
   return (
     <StyledDashboardCard {...rest}>
       <div className="card-block">
         <StyledFlex>
           <div>
             <p>{label}</p>
+            {loading && <Spinner size={20} />}
             <h4>{value}</h4>
           </div>
           <div>{icon}</div>
