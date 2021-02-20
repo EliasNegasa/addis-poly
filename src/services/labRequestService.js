@@ -4,7 +4,6 @@ import { apiUrl, limit } from "../config.json";
 const apiEndpoint = `${apiUrl}/api/labRequests`;
 
 export function getLabRequests() {
-console.log("REQUEST SER VICE");
     return http.get(`${apiEndpoint}/${limit}`);
 }
 

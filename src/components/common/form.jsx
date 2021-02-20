@@ -43,6 +43,10 @@ class Form extends Component {
         return "Invalid Phone No.";
       }
     }
+    if (name.includes("tType")) {
+      if (value == null || value === "") return `Required`;
+      return null;
+    }
     return error ? error.details[0].message : null;
   };
 
@@ -112,7 +116,7 @@ class Form extends Component {
     const { data, errors } = this.state;
     return (
       <Input
-        value={data[name]}
+        value={data[name] ? data[name] : ""}
         onChange={this.handleChange}
         type={type}
         name={name}

@@ -36,6 +36,7 @@ export default function FullScreenDialog({
   openPopup,
   setOpenPopup,
   setId,
+  setIsResult,
 }) {
   const classes = useStyles();
 
@@ -60,6 +61,7 @@ export default function FullScreenDialog({
                   onClick={() => {
                     setOpenPopup(false);
                     setId("");
+                    setIsResult("");
                   }}
                   edge="start"
                   color="inherit"

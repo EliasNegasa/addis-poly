@@ -188,7 +188,7 @@ class LabRequestForm extends Form {
                   "Test Category",
                   this.state.testCategoryOptions
                 )}
-                <StyledFlex wrap>
+                <StyledFlex wrapFlex>
                   {!_.isEmpty(data.testCategoryId) &&
                     data.testCategoryId.map((testCategory) => {
                       return (

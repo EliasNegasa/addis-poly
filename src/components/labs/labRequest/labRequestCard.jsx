@@ -11,6 +11,7 @@ import ActionButton from "../../common/button";
 import { StyledBadge, StyledFlex } from "../../styled-components/container";
 import LabRequestForm from "./labRequestForm";
 import FullScreenDialog from "../../common/fullScreenDialog";
+import LabResultForm from "../labResult/labResultForm";
 
 const useStyles = makeStyles({
   root: {
@@ -47,10 +48,13 @@ const useStyles = makeStyles({
 const LabRequestCard = ({ labRequests, onUpdated }) => {
   const [openPopup, setOpenPopup] = useState(false);
   const [id, setId] = useState("");
+  const [isResult, setIsResult] = useState(false);
 
-  const handleClickOpen = (id) => {
+  const handleClickOpen = (id, isResult) => {
+    console.log("ID", id);
     setOpenPopup(true);
     setId(id);
+    setIsResult(isResult);
   };
 
   const setCardClass = (requestStatus) => {
@@ -65,7 +69,6 @@ const LabRequestCard = ({ labRequests, onUpdated }) => {
   };
 
   const classes = useStyles();
-  console.log("PROPS", labRequests);
   return (
     <>
       <ActionButton
@@ -73,7 +76,7 @@ const LabRequestCard = ({ labRequests, onUpdated }) => {
         label="Request Lab Test"
         icon={<AddIcon />}
       />
-      <StyledFlex wrap>
+      <StyledFlex wrapFlex>
         {labRequests.map((labRequest) => (
           <Card
             key={labRequest.id}
@@ -121,7 +124,11 @@ const LabRequestCard = ({ labRequests, onUpdated }) => {
                   View Result
                 </Button>
               ) : labRequest.status === "New" ? (
-                <Button size="small" className={classes.btn}>
+                <Button
+                  onClick={() => handleClickOpen(labRequest.id, true)}
+                  size="small"
+                  className={classes.btn}
+                >
                   Take
                 </Button>
               ) : (
@@ -135,17 +142,34 @@ const LabRequestCard = ({ labRequests, onUpdated }) => {
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
         setId={setId}
+        setIsResult={setIsResult}
         title={
-          id ? <span>Edit Lab Request</span> : <span>Add Lab Request</span>
+          !id ? (
+            <span>Add Lab Request</span>
+          ) : isResult ? (
+            <span>Submit Lab Result</span>
+          ) : (
+            <span>Edit Lab Request</span>
+          )
         }
       >
-        <LabRequestForm
-          id={id}
-          openPopup={openPopup}
-          setOpenPopup={setOpenPopup}
-          setId={setId}
-          onUpdated={onUpdated}
-        />
+        {isResult ? (
+          <LabResultForm
+            id={id}
+            openPopup={openPopup}
+            setOpenPopup={setOpenPopup}
+            setId={setId}
+            onUpdated={onUpdated}
+          />
+        ) : (
+          <LabRequestForm
+            id={id}
+            openPopup={openPopup}
+            setOpenPopup={setOpenPopup}
+            setId={setId}
+            onUpdated={onUpdated}
+          />
+        )}
       </FullScreenDialog>
     </>
   );
