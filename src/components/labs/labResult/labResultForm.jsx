@@ -1,6 +1,6 @@
 import React from "react";
 import { getLabRequest } from "../../../services/labRequestService";
-import _, { pickBy } from "lodash";
+import _ from "lodash";
 import BackdropLoader from "../../common/Backdrop";
 import Form from "../../common/form";
 import Notification from "../../common/notification";
@@ -123,7 +123,6 @@ class LabResultForm extends Form {
       message,
       messageType,
       messageTitle,
-      data,
       labRequest,
     } = this.state;
     return (
