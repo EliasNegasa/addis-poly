@@ -57,28 +57,28 @@ class Home extends Component {
           <DashboardBox
             blue
             label="Patients"
-            value={numberOfPatients ? numberOfPatients : 0}
+            value={numberOfPatients ? numberOfPatients : ""}
             icon={<PeopleAltOutlinedIcon />}
             loading={loading}
           />
           <DashboardBox
             black
             label="Lab Reports"
-            value={numberOfLabs ? numberOfLabs : 0}
+            value={numberOfLabs ? numberOfLabs : ""}
             icon={<SpeakerNotesOutlinedIcon />}
             loading={loading}
           />
           <DashboardBox
             blue
             label="Today's Patients"
-            value={numberOfTodaysPatient ? numberOfTodaysPatient : 0}
+            value={numberOfTodaysPatient ? numberOfTodaysPatient : ""}
             icon={<PeopleAltOutlinedIcon />}
             loading={loading}
           />
           <DashboardBox
             black
             label="Active Users"
-            value={numberOfUsers ? numberOfUsers : 0}
+            value={numberOfUsers ? numberOfUsers : ""}
             icon={<SupervisedUserCircleIcon />}
             loading={loading}
           />

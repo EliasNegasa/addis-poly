@@ -61,14 +61,16 @@ const PatientsTable = ({
 
   const handleAdvancedSearch = (isSearch) => {
     isSearch && setOpenPopup(true);
+    !isSearch && setSearchResult("");
     setIsSearch(isSearch);
+    console.log("SEARCH RESURLT", searchResult);
   };
 
   return (
     <>
       <StyledFlex center>
         <SearchBox value={searchValue} onChange={onSearchChange} />
-        {isSearch ? (
+        {searchResult ? (
           <>
             <StyledLink onClick={() => handleAdvancedSearch(true)}>
               Edit Search
@@ -92,7 +94,7 @@ const PatientsTable = ({
         columns={columns}
         sortColumn={sortColumn}
         onSort={onSort}
-        data={isSearch && searchResult ? searchResult : patients}
+        data={searchResult ? searchResult : patients}
       />
       <Popup
         openPopup={openPopup}
@@ -115,6 +117,7 @@ const PatientsTable = ({
             onUpdated={onUpdated}
             onCount={onCount}
             setSearchResult={setSearchResult}
+            setIsSearch={setIsSearch}
           />
         ) : (
           <PatientForm

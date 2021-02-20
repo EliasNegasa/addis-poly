@@ -10,7 +10,7 @@ const DashboardBox = ({ label, value, icon, loading, ...rest }) => {
         <StyledFlex>
           <div>
             <p>{label}</p>
-            {loading && <Spinner size={20} />}
+            {loading && <Spinner size={30} />}
             <h4>{value}</h4>
           </div>
           <div>{icon}</div>

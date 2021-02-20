@@ -15,7 +15,7 @@ class SearchForm extends Form {
       firstName: "",
       fatherName: "",
       grandName: "",
-      phone: "",
+      phoneNo: "",
       houseNo: "",
     },
     errors: {},
@@ -27,7 +27,7 @@ class SearchForm extends Form {
     firstName: Joi.label("First Name"),
     fatherName: Joi.label("Last Name"),
     grandName: Joi.label("Grand Name"),
-    phone: Joi.label("Phone"),
+    phoneNo: Joi.label("Phone"),
     houseNo: Joi.label("House No."),
   };
 
@@ -57,6 +57,7 @@ class SearchForm extends Form {
       this.props.setSearchResult(data.patients);
       this.props.onCount(data.count);
       this.props.setOpenPopup(false);
+      this.props.setIsSearch(false);
     } catch (ex) {
       if (ex.response && ex.response.status !== 200) {
         this.setState({
@@ -68,7 +69,6 @@ class SearchForm extends Form {
 
   render() {
     const { backdrop, loading } = this.state;
-
     return (
       <>
         {backdrop && <BackdropLoader />}
@@ -83,7 +83,7 @@ class SearchForm extends Form {
                   {this.renderInput("grandName", "Grand Father's Name")}
                 </StyledFormContainer>
                 <StyledFormContainer>
-                  {this.renderInput("phone", "Phone", "number")}
+                  {this.renderInput("phoneNo", "Phone", "number")}
                   {this.renderInput("houseNo", "House No.")}
                 </StyledFormContainer>
               </StyledFlex>
