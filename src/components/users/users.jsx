@@ -2,17 +2,16 @@ import React, { Component } from "react";
 import _ from "lodash";
 import { paginate } from "../../utils/paginate";
 import { getUsers } from "../../services/userService";
-import Pagination from "../common/pagination";
-import { StyledPaginationContainer } from "../styled-components/container";
 import { StyledSubHeading } from "../styled-components/heading";
 import Spinner from "../common/spinner";
 import UsersTable from "./usersTable";
+import TablePaginate from "../common/TablePagination";
 
 class Users extends Component {
   state = {
     users: [],
-    currentPage: 1,
-    pageSize: 10,
+    currentPage: 0,
+    pageSize: 5,
     searchQuery: "",
     sortColumn: { path: "firstName", order: "asc" },
     loading: false,
@@ -44,8 +43,17 @@ class Users extends Component {
     this.setState({ isUpdated: true });
   };
 
-  handlePageChange = (page) => {
-    this.setState({ currentPage: page });
+  handlePageChange = (event, newPage) => {
+    this.setState({ currentPage: newPage });
+  };
+
+  handleChangeRowsPerPage = (event) => {
+    console.log("EVENT", event);
+    this.setState({
+      pageSize: parseInt(event.target.value, 10),
+      currentPage: 0,
+    });
+    console.log("PAge size", this.state.pageSize);
   };
 
   handleSort = (sortColumn) => {
@@ -110,15 +118,15 @@ class Users extends Component {
         />
         {loading && <Spinner />}
 
-        <StyledPaginationContainer>
-          <p>Showing {totalCount} Users</p>
-          <Pagination
-            itemCount={totalCount}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={this.handlePageChange}
+        {!loading && totalCount && (
+          <TablePaginate
+            count={totalCount}
+            page={currentPage}
+            onChangePage={this.handlePageChange}
+            rowsPerPage={pageSize}
+            onChangeRowsPerPage={(event) => this.handleChangeRowsPerPage(event)}
           />
-        </StyledPaginationContainer>
+        )}
       </>
     );
   }

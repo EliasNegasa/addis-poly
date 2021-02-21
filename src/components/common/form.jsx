@@ -112,7 +112,7 @@ class Form extends Component {
     );
   };
 
-  renderInput = (name, label, type = "text") => {
+  renderInput = (name, label, type = "text", disabled = false) => {
     const { data, errors } = this.state;
     return (
       <Input
@@ -122,6 +122,7 @@ class Form extends Component {
         name={name}
         label={label}
         errors={errors[name]}
+        disabled={disabled}
       />
     );
   };

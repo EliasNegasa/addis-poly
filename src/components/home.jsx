@@ -8,6 +8,7 @@ import { getUsers } from "../services/userService";
 import { filterPatients, getPatients } from "../services/patientService";
 import { formatDateY } from "../utils/formatDate";
 import Spinner from "./common/spinner";
+import { getLabRequests } from "../services/labRequestService";
 // import LineChart from "./chart/lineChart";
 // import BarChart from "./chart/barChart";
 
@@ -28,11 +29,13 @@ class Home extends Component {
       const { data: todaysPatients } = await filterPatients(
         `createdAt=${formatDateY(new Date())}`
       );
+      const { data: labs } = await getLabRequests();
 
       this.setState({
         numberOfUsers: users.count,
         numberOfPatients: patients.count,
         numberOfTodaysPatient: todaysPatients.count,
+        numberOfLabs: labs.count,
         loading: false,
       });
     } catch (ex) {

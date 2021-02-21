@@ -119,23 +119,6 @@ const LabRequestCard = ({ labRequests, onUpdated }) => {
                 )}
               </Typography>
             </CardContent>
-            {/* <CardActions>
-              {labRequest.status === "Done" ? (
-                <Button size="small" className={classes.btn}>
-                  View Result
-                </Button>
-              ) : labRequest.status === "New" ? (
-                <Button
-                  onClick={() => handleClickOpen(labRequest.id, true)}
-                  size="small"
-                  className={classes.btn}
-                >
-                  Take
-                </Button>
-              ) : (
-                <></>
-              )}
-            </CardActions> */}
           </Card>
         ))}
       </StyledFlex>

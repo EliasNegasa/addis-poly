@@ -23,6 +23,7 @@ class LabRequests extends Component {
 
   async componentDidUpdate(prevProps, prevState) {
     if (prevState.isUpdated !== this.state.isUpdated) {
+      console.log("OOOOOOOOOOOO");
       this.setState({ loading: true });
       const { data } = await getLabRequests();
       this.setState({
@@ -34,6 +35,7 @@ class LabRequests extends Component {
   }
 
   handleIsUpdated = () => {
+    console.log("UUUUUUUPPP");
     this.setState({ isUpdated: true });
   };
 

@@ -68,14 +68,15 @@ class LabResultForm extends Form {
   };
 
   handleClickTake = async (id) => {
-    console.log("LAB RE ID", id);
     const changeStatus = {
       id: id,
       status: "InProgress",
     };
     try {
       const { data: labRequest } = await saveLabRequest(changeStatus);
-
+      console.log("LLLL reQUEst", labRequest);
+      this.setState({ labRequest: labRequest.result });
+      this.props.onUpdated();
       console.log("Saved");
     } catch (ex) {
       if (ex.response && ex.response.status !== 200) {
@@ -111,10 +112,15 @@ class LabResultForm extends Form {
     this.setState({ backdrop: true });
 
     try {
-      const { data: labRequest } = await saveLabResult(newData);
+      const { data: labResult } = await saveLabResult(newData);
 
+      const { data: labRequest } = await saveLabRequest({
+        id: data.labRequestId,
+        status: "Done",
+      });
+      console.log("lllllllllllll", labRequest);
       this.setState({
-        message: labRequest.result
+        message: labResult.result
           ? "Lab Result updated Successfully"
           : "Lab Request submitted Successfully",
         messageType: "success",
@@ -162,7 +168,7 @@ class LabResultForm extends Form {
               />
             )}
 
-            <StyledFormContainer fullWidth>
+            <StyledFormContainer fullWidth disabled="disabled">
               {labRequest && labRequest.status === "New" && (
                 <ActionButton
                   custom
@@ -211,7 +217,9 @@ class LabResultForm extends Form {
                                   <div key={testType.id}>
                                     {this.renderInput(
                                       `tType${testType.id}`,
-                                      `${testType.name}`
+                                      `${testType.name}`,
+                                      "text",
+                                      labRequest.status === "New" ? true : false
                                     )}
                                   </div>
                                 );
