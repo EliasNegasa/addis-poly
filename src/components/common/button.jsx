@@ -13,9 +13,19 @@ const useStyles = makeStyles((theme) => ({
       color: "#ececec",
     },
   },
+  custom: {
+    margin: "0 0 0 auto",
+    backgroundColor: "#f9b115",
+    color: "#000",
+    display: "flex",
+    "&:hover": {
+      backgroundColor: "#f9b115",
+      color: "#000",
+    },
+  },
 }));
 
-const ActionButton = ({ label, icon, onClick }) => {
+const ActionButton = ({ label, icon, onClick, custom }) => {
   const classes = useStyles();
 
   return (
@@ -23,7 +33,7 @@ const ActionButton = ({ label, icon, onClick }) => {
       variant="contained"
       color="primary"
       size="large"
-      className={classes.button}
+      className={custom ? `${classes.custom}` : classes.button}
       startIcon={icon}
       onClick={onClick ? onClick : null}
     >

@@ -31,17 +31,24 @@ class TestCategoryForm extends Form {
   populateTestCategory = async () => {
     try {
       const testCategoryId = this.props.id;
-      if (testCategoryId === "") return;
+      if (testCategoryId === "") {
+        this.setState({ loading: false });
+        return;
+      }
 
       const { data: testCategory } = await getTestCategory(testCategoryId);
 
-      this.setState({ data: this.mapToViewModel(testCategory) });
+      this.setState({
+        data: this.mapToViewModel(testCategory),
+        loading: false,
+      });
     } catch (ex) {
       this.props.history.replace("/not-found");
     }
   };
 
   async componentDidMount() {
+    this.setState({ loading: true });
     await this.populateTestCategory();
   }
 

@@ -10,10 +10,10 @@ import reportWebVitals from "./reportWebVitals";
 ReactDOM.render(
   <>
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+        <GlobalStyle />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
     </ThemeProvider>
   </>,
   document.getElementById("root")

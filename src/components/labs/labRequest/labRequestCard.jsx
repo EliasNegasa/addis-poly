@@ -18,6 +18,10 @@ const useStyles = makeStyles({
     width: "22%",
     minWidth: 200,
     margin: "1rem",
+    cursor: "pointer",
+    "&:hover": {
+      boxShadow: "-2px 1px 16px 4px #dedede",
+    },
   },
   rootRed: {
     borderLeft: "2px solid #da0000",
@@ -79,6 +83,7 @@ const LabRequestCard = ({ labRequests, onUpdated }) => {
       <StyledFlex wrapFlex>
         {labRequests.map((labRequest) => (
           <Card
+            onClick={() => handleClickOpen(labRequest.id, true)}
             key={labRequest.id}
             className={`${classes.root} ${setCardClass(labRequest.status)}`}
           >
@@ -93,11 +98,7 @@ const LabRequestCard = ({ labRequests, onUpdated }) => {
               <Typography variant="h6" component="h2" className={classes.name}>
                 {`${labRequest.patient.firstName} ${labRequest.patient.fatherName} ${labRequest.patient.grandName}`}
               </Typography>
-              {/* <>
-                {labRequest.testTypes.map((testType) => (
-                  <span style={{ fontSize: "11px" }}>{testType.name}, </span>
-                ))}
-              </> */}
+
               {labRequest.physician && (
                 <Typography style={{ fontSize: "11px" }}>
                   Requested By: {labRequest.physician.firstName}
@@ -118,7 +119,7 @@ const LabRequestCard = ({ labRequests, onUpdated }) => {
                 )}
               </Typography>
             </CardContent>
-            <CardActions>
+            {/* <CardActions>
               {labRequest.status === "Done" ? (
                 <Button size="small" className={classes.btn}>
                   View Result
@@ -134,7 +135,7 @@ const LabRequestCard = ({ labRequests, onUpdated }) => {
               ) : (
                 <></>
               )}
-            </CardActions>
+            </CardActions> */}
           </Card>
         ))}
       </StyledFlex>

@@ -1,5 +1,8 @@
 import React from "react";
-import { getLabRequest } from "../../../services/labRequestService";
+import {
+  getLabRequest,
+  saveLabRequest,
+} from "../../../services/labRequestService";
 import _ from "lodash";
 import BackdropLoader from "../../common/Backdrop";
 import Form from "../../common/form";
@@ -8,6 +11,9 @@ import Spinner from "../../common/spinner";
 import { StyledFlex } from "../../styled-components/container";
 import { StyledFormContainer } from "../../styled-components/styledForm";
 import { saveLabResult } from "../../../services/labResultService";
+import ActionButton from "../../common/button";
+import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
+import { StyledSubHeading } from "../../styled-components/heading";
 
 class LabResultForm extends Form {
   state = {
@@ -59,6 +65,23 @@ class LabResultForm extends Form {
       labRequestId: labRequest.id,
       patientId: labRequest.patientId,
     };
+  };
+
+  handleClickTake = async (id) => {
+    console.log("LAB RE ID", id);
+    const changeStatus = {
+      id: id,
+      status: "InProgress",
+    };
+    try {
+      const { data: labRequest } = await saveLabRequest(changeStatus);
+
+      console.log("Saved");
+    } catch (ex) {
+      if (ex.response && ex.response.status !== 200) {
+        const error = ex.response.data;
+      }
+    }
   };
 
   doSubmit = async () => {
@@ -140,46 +163,66 @@ class LabResultForm extends Form {
             )}
 
             <StyledFormContainer fullWidth>
-              <>
-                <strong>Card No: </strong>
-                {labRequest && `${labRequest.patient.cardNumber}`}
-              </>
-              <>
-                <br />
-                <strong>Name: </strong>
-                {labRequest &&
-                  `${labRequest.patient.firstName} ${labRequest.patient.fatherName} ${labRequest.patient.grandName}`}
-              </>
-              <form onSubmit={this.handleSubmit} style={{ margin: "2rem 0" }}>
-                <StyledFlex wrapFlex>
-                  {labRequest &&
-                    labRequest.testCategories.map((testCategory) => {
-                      return (
-                        <div
-                          key={testCategory.id}
-                          style={{
-                            padding: "2rem",
-                            borderLeft: "1px solid rgba(0, 0, 0, 0.12)",
-                          }}
-                        >
-                          <strong>{testCategory.name}</strong>
-                          {testCategory.testTypes &&
-                            testCategory.testTypes.map((testType) => {
-                              return (
-                                <div key={testType.id}>
-                                  {this.renderInput(
-                                    `tType${testType.id}`,
-                                    `${testType.name}`
-                                  )}
-                                </div>
-                              );
-                            })}
-                        </div>
-                      );
-                    })}
-                </StyledFlex>
-                {this.renderButton("Submit Result")}
-              </form>
+              {labRequest && labRequest.status === "New" && (
+                <ActionButton
+                  custom
+                  onClick={() => this.handleClickTake(labRequest.id)}
+                  label="Take"
+                  icon={<CreateOutlinedIcon />}
+                />
+              )}
+              <div
+                style={{
+                  margin: "0 auto",
+                  width: "fit-content",
+                  textAlign: "center",
+                }}
+              >
+                <div style={{ fontSize: "18px" }}>
+                  <strong>Card No: </strong>
+                  {labRequest && `${labRequest.patient.cardNumber}`}
+                  <>
+                    <br />
+                    <strong>Name: </strong>
+                    {labRequest &&
+                      `${labRequest.patient.firstName} ${labRequest.patient.fatherName} ${labRequest.patient.grandName}`}
+                  </>
+                </div>
+
+                <form onSubmit={this.handleSubmit} style={{ margin: "2rem 0" }}>
+                  <StyledFlex wrapFlex>
+                    {labRequest &&
+                      labRequest.testCategories.map((testCategory) => {
+                        return (
+                          <div
+                            key={testCategory.id}
+                            style={{
+                              padding: "2rem",
+                              borderLeft: "1px solid rgba(0, 0, 0, 0.12)",
+                              borderRight: "1px solid rgba(0, 0, 0, 0.12)",
+                            }}
+                          >
+                            <StyledSubHeading small>
+                              {testCategory.name}
+                            </StyledSubHeading>
+                            {testCategory.testTypes &&
+                              testCategory.testTypes.map((testType) => {
+                                return (
+                                  <div key={testType.id}>
+                                    {this.renderInput(
+                                      `tType${testType.id}`,
+                                      `${testType.name}`
+                                    )}
+                                  </div>
+                                );
+                              })}
+                          </div>
+                        );
+                      })}
+                  </StyledFlex>
+                  {this.renderButton("Submit Result")}
+                </form>
+              </div>
             </StyledFormContainer>
           </>
         )}

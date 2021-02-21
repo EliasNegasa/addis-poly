@@ -20,4 +20,10 @@ export const StyledSubHeading = styled(StyledHeading)`
       margin: 0;
     `
   }
+
+  ${props =>
+    props.small && css`
+      font-size: 16px;
+    `
+  }
 `;

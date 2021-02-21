@@ -13,7 +13,6 @@ import { getTestCategories } from "../../../services/testCategoryService";
 import { getPatients } from "../../../services/patientService";
 import { getTestTypes } from "../../../services/testTypeService";
 import { StyledFlex } from "../../styled-components/container";
-const Joi = require("joi-browser");
 
 class LabRequestForm extends Form {
   state = {
@@ -32,9 +31,7 @@ class LabRequestForm extends Form {
     message: "",
   };
 
-  schema = {
-    // type: Joi.boolean().label("Test Type"),
-  };
+  schema = {};
 
   populateLabRequest = async () => {
     try {
@@ -176,6 +173,7 @@ class LabRequestForm extends Form {
                 type={messageType}
               />
             )}
+
             <StyledFormContainer fullWidth>
               <form onSubmit={this.handleSubmit}>
                 {this.renderPreloadedSelect(

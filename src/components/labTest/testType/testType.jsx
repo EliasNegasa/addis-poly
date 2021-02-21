@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getTestTypes } from "../../../services/testTypeService";
-import Spinner from "../../common/button";
+import Spinner from "../../common/spinner";
 import { StyledSubHeading } from "../../styled-components/heading";
 import TestTypeList from "./testTypeList";
 

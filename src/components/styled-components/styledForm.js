@@ -162,7 +162,7 @@ export const StyledFormContainer = styled.div`
     css`
       width: 100%;
       max-width: 95%;
-      margin: 4rem auto 1rem;
+      margin: 6rem auto 1rem;
       display: block;
     `}
 

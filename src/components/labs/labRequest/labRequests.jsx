@@ -37,10 +37,6 @@ class LabRequests extends Component {
     this.setState({ isUpdated: true });
   };
 
-  // handleSearch = (query) => {
-  //   this.setState({ searchQuery: query, selectedGenre: null, currentPage: 1 });
-  // };
-
   render() {
     const { labRequests, loading } = this.state;
     return (

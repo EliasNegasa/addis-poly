@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getTestCategories } from "../../../services/testCategoryService";
-import Spinner from "../../common/button";
+import Spinner from "../../common/spinner";
 import { StyledSubHeading } from "../../styled-components/heading";
 import TestCategoryList from "./testCategoryList";
 
