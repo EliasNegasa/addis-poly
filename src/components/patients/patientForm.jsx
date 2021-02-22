@@ -112,6 +112,7 @@ class PatientForm extends Form {
         backdrop: false,
       });
       console.log("Saved");
+      this.setState({ message: "" });
 
       this.props.setOpenPopup(false);
       this.props.setId("");
@@ -125,6 +126,7 @@ class PatientForm extends Form {
           messageTitle: "Error",
           backdrop: false,
         });
+        this.setState({ message: "" });
       }
     }
   };
@@ -143,7 +145,7 @@ class PatientForm extends Form {
         {loading && <Spinner />}
         {!loading && (
           <>
-            {message && this.props.openPopup && (
+            {message && (
               <Notification
                 title={messageTitle}
                 message={message}

@@ -70,6 +70,7 @@ class Form extends Component {
     //e.currentTarget
     const errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(input);
+    console.log("errorMessage", errorMessage);
     if (errorMessage) errors[input.name] = errorMessage;
     else delete errors[input.name];
     const data = { ...this.state.data };
