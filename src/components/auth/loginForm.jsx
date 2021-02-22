@@ -1,9 +1,8 @@
 import React from "react";
 import BackdropLoader from "../common/Backdrop";
 import Form from "../common/form";
-import { StyledCard } from "../styled-components/card";
 import { StyledSubHeading } from "../styled-components/heading";
-import { Message, StyledFormContainer } from "../styled-components/styledForm";
+import { StyledFormContainer } from "../styled-components/styledForm";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Button from "@material-ui/core/Button";
 

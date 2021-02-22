@@ -7,7 +7,6 @@ import DashboardBox from "./dashboardBox";
 import { getUsers } from "../services/userService";
 import { filterPatients, getPatients } from "../services/patientService";
 import { formatDateY } from "../utils/formatDate";
-import Spinner from "./common/spinner";
 import { getLabRequests } from "../services/labRequestService";
 // import LineChart from "./chart/lineChart";
 // import BarChart from "./chart/barChart";
@@ -40,8 +39,8 @@ class Home extends Component {
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 401) {
-        console.log("TOKEN EXPIRED");
-        localStorage.removeItem("token");
+        // console.log("TOKEN EXPIRED");
+        // localStorage.removeItem("token");
       }
     }
   }

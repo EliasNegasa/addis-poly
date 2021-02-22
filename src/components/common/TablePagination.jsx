@@ -11,7 +11,7 @@ export default function TablePaginate({
   return (
     <>
       <TablePagination
-        rowsPerPageOptions={[5, 50, 100, 250, 500]}
+        rowsPerPageOptions={[50, 100, 250, 500]}
         component="div"
         count={count}
         page={page}

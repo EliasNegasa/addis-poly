@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import _ from "lodash";
 import { StyledBadge } from "../styled-components/container";
 import { formatDate } from "../../utils/formatDate";
-import { Checkbox, TableBody, TableCell, TableRow } from "@material-ui/core";
+import { TableBody, TableCell, TableRow } from "@material-ui/core";
 
 class TBody extends Component {
   renderCell = (item, column) => {
@@ -36,17 +36,3 @@ class TBody extends Component {
 }
 
 export default TBody;
-
-{
-  /* <tbody>
-{data.map((item) => (
-  <StyledTr key={item.id}>
-    {columns.map((column) => (
-      <StyledTd key={item.id + (column.path || column.key)}>
-        {this.renderCell(item, column)}
-      </StyledTd>
-    ))}
-  </StyledTr>
-))}
-</tbody> */
-}

@@ -11,7 +11,7 @@ class Patients extends Component {
   state = {
     patients: [],
     currentPage: 0,
-    pageSize: 5,
+    pageSize: 50,
     searchQuery: "",
     sortColumn: { path: "cardNumber", order: "desc" },
     loading: false,
@@ -30,8 +30,6 @@ class Patients extends Component {
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 401) {
-        console.log("TOKEN EXPIRED");
-        localStorage.removeItem("token");
       }
     }
   }
@@ -61,12 +59,10 @@ class Patients extends Component {
   };
 
   handleChangeRowsPerPage = (event) => {
-    console.log("EVENT", event);
     this.setState({
       pageSize: parseInt(event.target.value, 10),
       currentPage: 0,
     });
-    console.log("Page size", this.state.pageSize);
   };
 
   handleSort = (sortColumn) => {
@@ -105,7 +101,8 @@ class Patients extends Component {
           (patients.grandName &&
             patients.grandName
               .toLowerCase()
-              .startsWith(searchQuery.toLowerCase()))
+              .startsWith(searchQuery.toLowerCase())) ||
+          (patients.phone && patients.phone.includes(searchQuery))
       );
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
@@ -140,7 +137,8 @@ class Patients extends Component {
             page={currentPage}
             onChangePage={this.handlePageChange}
             rowsPerPage={pageSize}
-            onChangeRowsPerPage={(event) => this.handleChangeRowsPerPage(event)}
+            // onChangeRowsPerPage={(event) => this.handleChangeRowsPerPage(event)}
+            onChangeRowsPerPage={this.handleChangeRowsPerPage}
           />
         )}
       </>

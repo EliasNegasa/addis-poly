@@ -80,7 +80,6 @@ class LabResultForm extends Form {
       console.log("Saved");
     } catch (ex) {
       if (ex.response && ex.response.status !== 200) {
-        const error = ex.response.data;
       }
     }
   };
